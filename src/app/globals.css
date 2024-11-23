@@ -1,16 +1,17 @@
-body {
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
     font-family: Arial, sans-serif;
     background-color: #9cacca;
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  
-  /* Container */
-  .container {
+    font-weight: bold;
+}
+
+/* Container */
+.container {
     max-width: 400px;
     width: 100%;
     background-color: #ffffff;
@@ -18,29 +19,25 @@ body {
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
-  }
-  
-  /* Form Styles */
-  form {
+}
+
+/* Form Styles */
+form {
     display: flex;
     flex-direction: column;
-  }
-  
-  label {
-    margin-top: 15px;
-    text-align: left;
-    font-weight: bold;
-  }
-  
-  input {
-    margin-top: 5px;
+}
+
+
+input {
+
     padding: 10px;
     font-size: 16px;
     border: 1px solid #25252b;
     border-radius: 4px;
-  }
-  
-  button {
+    background-color: white;
+}
+
+button {
     margin-top: 20px;
     padding: 10px;
     font-size: 16px;
@@ -50,24 +47,22 @@ body {
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-  }
-  
-  button:hover {
+}
+
+button:hover {
     background-color: #0056b3;
-  }
-  
-  p {
+}
+
+p {
     margin-top: 15px;
     font-size: 14px;
-  }
-  
-  a {
+}
+
+a {
     color: #007bff;
     text-decoration: none;
-  }
-  
-  a:hover {
+}
+
+a:hover {
     text-decoration: underline;
-  }
-
-
+}
