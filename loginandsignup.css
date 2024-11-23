@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f3f4f6;
+    background-color: #9cacca;
     margin: 0;
     padding: 0;
     display: flex;
@@ -13,7 +13,7 @@ body {
   .container {
     max-width: 400px;
     width: 100%;
-    background-color: #fff;
+    background-color: #ffffff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -36,7 +36,7 @@ body {
     margin-top: 5px;
     padding: 10px;
     font-size: 16px;
-    border: 1px solid #ccc;
+    border: 1px solid #25252b;
     border-radius: 4px;
   }
   
@@ -45,7 +45,7 @@ body {
     padding: 10px;
     font-size: 16px;
     background-color: #007bff;
-    color: white;
+    color: rgb(255, 255, 255);
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -69,4 +69,5 @@ body {
   a:hover {
     text-decoration: underline;
   }
-  
+
+
