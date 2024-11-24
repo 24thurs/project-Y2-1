@@ -5,15 +5,6 @@ import { createCell } from "../../../utils/actions";
 import { useActionState } from "react";
 import Link from "next/link";
 
-const SubmitButton = () => {
-  const { pending } = useFormStatus();
-  return (
-    <button type="submit" disabled={pending}>
-      {pending ? "Submitting..." : "Submit"}
-    </button>
-  );
-};
-
 const LoginForm = () => {
   const [message, formAction] = useActionState(createCell, null); //[ข้อความที่ได้จาก server, action]
 

@@ -114,6 +114,9 @@ export const SignupForm = () => {
           <div></div>
           <SignupButton />
         </form>
+        <div>Already have an account?
+          <Link href='/login'> Login</Link>
+        </div>
 
         {state?.errors?.name && (
           <li className="col-span-1 sm:col-span-2 text-red-500 text-lg">
