@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { signup } from "./actions";
+import { signup } from "../../../serveraction/serverActions";
 import { useFormStatus } from "react-dom";
 import { useActionState } from "react";
 
@@ -15,8 +15,7 @@ function SignupButton() {
 }
 
 export const SignupForm = () => {
-  const [state, action] = useActionState(signup, undefined);
-
+  const [submit, actionSubmit] = useActionState(signup, undefined);
   return (
     <div className="flex items-center justify-center gap-y-4">
       <div>
@@ -24,28 +23,31 @@ export const SignupForm = () => {
           <Link href="/login">Login</Link>
           <Link href="/signup">Sign up</Link>
         </div>
+        <hr />
         <form
-          action={action}
+          action={actionSubmit}
           className="text-xl grid grid-cols-1 sm:grid-cols-2 items-center justify-center gap-x-4 gap-y-3"
         >
           <div className="grid min-w-[300px]">
-            UserName
+            Username
             <input
-              placeholder="Name"
+              placeholder="username"
               type="text"
-              name="name"
+              name="userName"
               className="border"
-              // required
+              required
+              defaultValue="afdasffasd"
             />
           </div>
           <div className="grid">
             Name - Surname
             <input
-              placeholder="Name"
+              placeholder="Name - Surname"
               type="text"
               name="fullName"
               className="border"
-              // required
+              required
+              defaultValue="bfdsafdas"
             />
           </div>
 
@@ -57,16 +59,19 @@ export const SignupForm = () => {
               name="email"
               className="border"
               required
+              defaultValue="su25@gmail.com"
             />
           </div>
           <div className="grid">
             phone number
             <input
               placeholder="phone number"
-              type="text"
+              pattern="[0-9]*"
+              type="tel"
               name="phone"
               className="border"
-              // required
+              required
+              defaultValue="0000000000"
             />
           </div>
           <div className="grid">
@@ -77,6 +82,7 @@ export const SignupForm = () => {
               name="password"
               className="border"
               required
+              defaultValue="Sukum@47"
             />
           </div>
           <div className="grid">
@@ -87,26 +93,27 @@ export const SignupForm = () => {
               name="confirmPassword"
               className="border"
               required
+              defaultValue="Sukum@47"
             />
           </div>
           <div className="flex col-span-1 sm:col-span-2">
             Role:
             <div>
-              <label className="option ml-4">Student</label>
+              <label className="option ml-4 mr-2">Student</label>
               <input
                 type="radio"
                 id="option-1"
-                name="Status"
+                name="role"
                 value="Student"
                 className="mr-4"
-                // required
+                required
               />
             </div>
-            <label className="option">Teacher</label>
+            <label className="option mr-2">Teacher</label>
             <input
               type="radio"
               id="option"
-              name="Status"
+              name="role"
               value="Teacher"
               // required
             />
@@ -114,31 +121,46 @@ export const SignupForm = () => {
           <div></div>
           <SignupButton />
         </form>
-        <div>Already have an account?
-          <Link href='/login'> Login</Link>
+        <div className="my-5">
+          Already have an account?
+          <Link href="/login"> Login</Link>
         </div>
-
-        {state?.errors?.name && (
+        {submit?.errors?.name && (
           <li className="col-span-1 sm:col-span-2 text-red-500 text-lg">
-            {state.errors.name}
+            {submit.errors.name}
           </li>
         )}
-        {state?.errors?.password && (
+        {submit?.errors?.fullName && (
+          <li className="col-span-1 sm:col-span-2 text-red-500 text-lg">
+            {submit.errors.fullName}
+          </li>
+        )}
+        {submit?.errors?.email && (
+          <li className="col-span-1 sm:col-span-2 text-red-500 text-lg">
+            {submit.errors.email}
+          </li>
+        )}
+
+        {submit?.errors?.phone && (
+          <li className="col-span-1 sm:col-span-2 text-red-500 text-lg">
+            {submit.errors.phone}
+          </li>
+        )}
+        {submit?.errors?.password && (
           <li className="col-span-1 sm:col-span-2 text-red-500 text-lg">
             Password must:
             <ul>
-            {state.errors.password.map((error) => (
-              <li className="ml-6" key={error}>- {error}</li>
-            ))}</ul>
+              {submit.errors.password.map((error) => (
+                <li className="ml-6" key={error}>
+                  - {error}
+                </li>
+              ))}
+            </ul>
           </li>
         )}
-        {state?.errors?.phone && (
+        {submit?.errors?.confirmPassword && (
           <li className="col-span-1 sm:col-span-2 text-red-500 text-lg">
-            Phone number must
-            <ul>
-            {state.errors.phone.map((error) =>(
-              <li className="ml-6" key={error}>-  {error}</li>
-            ))}</ul>
+            {submit.errors.confirmPassword}
           </li>
         )}
       </div>

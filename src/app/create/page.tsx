@@ -58,8 +58,6 @@ const CreatePage = () => {
           placeholder="Post Img Url"
         />
         <textarea onChange={((e) => setContent(e.target.value))}
-          name=""
-          id=""
           className="w-[300px] bg-gray-200 py-2 px-3 rounded text-lg my-2"
           placeholder="Enter Content"
         ></textarea>

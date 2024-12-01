@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
-// import { fetchCell } from "../../../../utils/actions";
-import { connectMongoDB } from "../../../lib/mongodb";
-import Post from "../../../../models/post";
+import { connectMongoDB } from "../../../config/config";
+import { Post } from "../../../models/models";
 
 export const POST = async (req: Request) => {
   const { title, img, content } = await req.json();
@@ -15,12 +14,5 @@ export const GET = async () => {
   await connectMongoDB();
   const posts = await Post.find({});
   return NextResponse.json({ posts });
-  // const { searchParams } = new URL(req.url);
-  // const search = searchParams.get("search");
-  // //use param from route
-  // console.log(search);
-
-  // //   const cells = await fetchCell();
-  // //   return Response.json({ cells });
-  // return NextResponse.redirect(new URL("/", req.url));
 };
+

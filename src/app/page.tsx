@@ -61,7 +61,7 @@ function Home() {
             );
           })
         ) : (
-          <p className="bg-gray-500 p-3 my-3"> You do not have any post yet</p>
+          <p className="bg-gray-500 p-3 my-3"> Not have any post yet</p>
         )}
       </main>
     </div>
