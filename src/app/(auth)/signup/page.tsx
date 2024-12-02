@@ -23,7 +23,6 @@ const SignupPage = () => {
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
     setMessage(null); // Reset message state before submission
     setError(null); // Reset error state before submission
 
@@ -94,8 +93,8 @@ const SignupPage = () => {
         </div>
         <hr />
         <form
-          action={actionSubmit}
           onSubmit={handleSubmit}
+          action={actionSubmit}
           className="text-xl grid grid-cols-1 sm:grid-cols-2 items-center justify-center gap-x-4 gap-y-3"
         >
           <div className="grid min-w-[300px]">
