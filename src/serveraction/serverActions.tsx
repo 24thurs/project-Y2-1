@@ -1,10 +1,9 @@
 "use server";
 
 import { SignupFormSchema, FormState } from "@/app/(auth)/definitions";
-// import { baseURL } from "@/config/config";
 
 export async function signup(
-  state,
+  state: FormState,
   formData: FormData
 ): Promise<FormState> {
   // 1. Validate form fields
@@ -20,14 +19,15 @@ export async function signup(
     };
   }
 
-  const newData = { 
-      userName: rawData.userName,
-      fullName: rawData.fullName,
-      email: rawData.email,
-      phone: rawData.phone,
-      password: rawData.password,
-      role: rawData.role
-  } 
+  const newData = {
+    userName: rawData.userName,
+    fullName: rawData.fullName,
+    email: rawData.email,
+    phone: rawData.phone,
+    password: rawData.password,
+    role: rawData.role,
+  };
+
 
   try {
     const res = await fetch("http://localhost:3000/api/signup", {
@@ -40,7 +40,7 @@ export async function signup(
 
     if (res.ok) {
       console.log("success");
-    } 
+    }
   } catch (error) {
     console.error("Error occurred:", error);
     return {

@@ -4,6 +4,7 @@ import { User } from "@/models/models";
 import bcrypt from "bcrypt";
 
 export const POST = async (req: Request) => {
+
   try {
     const { userName, fullName, email, phone, password, role } =
       await req.json();
@@ -21,11 +22,24 @@ export const POST = async (req: Request) => {
     });
 
     await user.save();
-
-    return await NextResponse.json({ message: "User registered" });
-    // return NextResponse.json({userName, fullName, email, phone, password, role})
-  } catch(error) {
-    console.log(error)
-    return await NextResponse.json(error);
+    return NextResponse.json(
+      { message: "User registered successfully" },
+      { status: 201 }
+    );
+  } catch (error) {
+    if (error.code === 11000) {
+      // Handling duplicate key errors
+      const field = Object.keys(error.keyValue)[0];
+      console.log(`${field} already exists`)
+      return NextResponse.json(
+        { error: `${field} already exists` },
+        { status: 409 }
+      );
+    }
+    // Handle other types of errors
+    return NextResponse.json(
+      { error: "Failed to create user" },
+      { status: 400 }
+    );
   }
 };
