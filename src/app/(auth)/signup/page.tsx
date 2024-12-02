@@ -23,7 +23,6 @@ const SignupPage = () => {
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
     setMessage(null); // Reset message state before submission
     setError(null); // Reset error state before submission
 
@@ -106,7 +105,6 @@ const SignupPage = () => {
               name="userName"
               className="border"
               required
-              defaultValue="afdasffasd"
             />
           </div>
           <div className="grid">
@@ -117,7 +115,6 @@ const SignupPage = () => {
               name="fullName"
               className="border"
               required
-              defaultValue="bfdsafdas"
             />
           </div>
 
@@ -129,7 +126,6 @@ const SignupPage = () => {
               name="email"
               className="border"
               required
-              defaultValue="su25@gmail.com"
             />
           </div>
           <div className="grid">
@@ -141,7 +137,6 @@ const SignupPage = () => {
               name="phone"
               className="border"
               required
-              defaultValue="0000000000"
             />
           </div>
           <div className="grid">
@@ -152,7 +147,6 @@ const SignupPage = () => {
               name="password"
               className="border"
               required
-              defaultValue="Sukum@47"
             />
           </div>
           <div className="grid">
@@ -163,7 +157,6 @@ const SignupPage = () => {
               name="confirmPassword"
               className="border"
               required
-              defaultValue="Sukum@47"
             />
           </div>
           <div className="flex col-span-1 sm:col-span-2">
@@ -185,7 +178,6 @@ const SignupPage = () => {
               id="option"
               name="role"
               value="Teacher"
-              // required
             />
           </div>
           <div></div>
