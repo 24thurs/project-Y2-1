@@ -18,7 +18,7 @@ const LoginForm = () => {
           <input
             placeholder="Name"
             type="text"
-            name="name"
+            name="email"
             className="border"
           />
         </div>

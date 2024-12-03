@@ -3,7 +3,7 @@
 import Link from "next/link";
 import "../globals.css";
 import { useState, useEffect } from "react";
-// import { checkCookie } from "@/serveraction/serverActions";
+import { checkCookie } from "@/serveraction/serverActions";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,13 +13,13 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   };
 
-  // useEffect(() => {
-  //   async function getCookie() {
-  //     const isCookie = await checkCookie();
-  //     if (isCookie) setCookie(true);
-  //   }
-  //   getCookie();
-  // });
+  useEffect(() => {
+    async function getCookie() {
+      const isCookie = await checkCookie();
+      if (isCookie) setCookie(true);
+    }
+    getCookie();
+  });
 
   if (!cookie) {
     return (
@@ -66,7 +66,7 @@ const Navbar = () => {
             </div>
 
             <div className="grid gap-4">
-              <Link href="/">Sign Out</Link>
+              <Link href="/login">Sign Out</Link>
             </div>
           </div>
         </nav>
