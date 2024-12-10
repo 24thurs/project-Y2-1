@@ -1,7 +1,11 @@
 "use server";
 
-import 'server-only'
-import { SignupFormSchema, FormState, SessionPayload } from "@/app/(auth)/definitions";
+import "server-only";
+import {
+  SignupFormSchema,
+  FormState,
+  SessionPayload,
+} from "@/app/(auth)/definitions";
 import { SignJWT, jwtVerify } from "jose";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
@@ -22,7 +26,6 @@ export async function valid(
       errors: validatedFields.error.flatten().fieldErrors,
     };
   }
-
 }
 
 const secretKey = process.env.SESSION_SECRET;
@@ -59,12 +62,12 @@ export const checkCookie = async () => {
 export async function createSession(userId: string) {
   const expiresAt = new Date(Date.now() + 60 * 60 * 1000);
   const session = await encrypt({ userId, expiresAt });
-  (await cookies()).set('session', session, {
+  (await cookies()).set("session", session, {
     httpOnly: true,
     secure: true,
     expires: expiresAt,
-    sameSite: 'lax',
-    path: '/',
+    sameSite: "lax",
+    path: "/",
   });
 
   redirect("/");
@@ -107,3 +110,36 @@ export async function login(prevState: FormState, formData: FormData) {
 
   return { message: "user found" };
 }
+
+export const getProfile = async () => {
+  const cookieStore = await cookies();
+  const session = cookieStore.get("session")?.value;
+
+  if (!session) {
+    console.error("Session not found in cookies.");
+    return null;
+  }
+
+  const payload = await decrypt(session);
+  if (!payload) {
+    console.error("Failed to decrypt session.");
+    return null;
+  }
+
+  const userId = payload.userId;
+  const response = await fetch(`http://localhost:3000/api/profile/${userId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!response.ok) {
+    console.error("Failed to fetch profile");
+    return null;
+  }
+
+  const profile = await response.json();
+  console.log(profile)
+  return profile;
+};

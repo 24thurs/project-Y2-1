@@ -10,8 +10,6 @@ function Home() {
   //JavaScript
   const [postData, setPostData] = useState([]);
 
-  console.log(postData);
-
   const getPosts = async () => {
     try {
       const res = await fetch("http://localhost:3000/api/posts", {
