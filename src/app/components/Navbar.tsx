@@ -4,6 +4,7 @@ import Link from "next/link";
 import "../globals.css";
 import { useState, useEffect } from "react";
 import { checkCookie, deleteSession } from "@/serveraction/serverActions";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,6 +21,12 @@ const Navbar = () => {
     }
     getCookie();
   });
+
+  const pathname = usePathname();
+
+  const handleLogout = async () => {
+    await deleteSession(pathname);
+  };
 
   if (!cookie) {
     return (
@@ -66,7 +73,10 @@ const Navbar = () => {
             </div>
 
             <div className="grid gap-4">
-                <Link href="/" onClick={async () => { await deleteSession(); location.reload(); }}>Sign Out</Link>
+                    <button
+                    onClick={handleLogout}>
+                    Sign Out
+                    </button>
             </div>
           </div>
         </nav>

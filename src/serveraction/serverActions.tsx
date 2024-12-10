@@ -70,10 +70,13 @@ export async function createSession(userId: string) {
   redirect("/");
 }
 
-export async function deleteSession() {
+export async function deleteSession(currentPath: string) {
   const cookieStore = await cookies();
   cookieStore.delete("session");
-  redirect('/');
+
+  if (currentPath !== "/") {
+    redirect("/");
+  }
 }
 
 export async function login(prevState: FormState, formData: FormData) {

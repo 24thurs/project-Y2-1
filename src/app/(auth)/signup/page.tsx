@@ -46,7 +46,7 @@ const SignupPage = () => {
         const formElement = event.currentTarget as HTMLFormElement;
         const formData = new FormData(formElement);
         const formDataObject = Object.fromEntries(formData.entries());
-
+        
         const res = await fetch("/api/signup", {
           method: "POST",
           headers: {
