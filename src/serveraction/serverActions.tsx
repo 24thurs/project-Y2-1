@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import bcrypt from "bcrypt";
 
-export async function signup(
+export async function valid(
   state: FormState,
   formData: FormData
 ): Promise<FormState> {
@@ -50,7 +50,7 @@ export async function decrypt(session: string | undefined = "") {
 
 export const checkCookie = async () => {
   const cookieStore = await cookies();
-  const userID = cookieStore.get("user_id");
+  const userID = cookieStore.get("session");
 
   if (userID) return true;
   else return false;
@@ -67,13 +67,13 @@ export async function createSession(userId: string) {
     path: '/',
   });
 
-  redirect("/dashboard");
+  redirect("/");
 }
 
 export async function deleteSession() {
   const cookieStore = await cookies();
   cookieStore.delete("session");
-  redirect('/login');
+  redirect('/');
 }
 
 export async function login(prevState: FormState, formData: FormData) {
@@ -103,8 +103,4 @@ export async function login(prevState: FormState, formData: FormData) {
   await createSession(userId);
 
   return { message: "user found" };
-}
-
-export async function logout() {
-  deleteSession();
 }

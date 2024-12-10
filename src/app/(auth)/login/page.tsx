@@ -30,7 +30,6 @@ const LoginPage = () => {
             type="text"
             name="email"
             className="border"
-            defaultValue="su25@gmail.com"
           />
         </div>
         <div className="grid">
@@ -40,7 +39,6 @@ const LoginPage = () => {
             type="text"
             name="password"
             className="border"
-            defaultValue="Sukum@47"
           />
         </div>
         <button className="bg-green-500">Log In</button>

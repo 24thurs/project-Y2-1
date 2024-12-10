@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { signup } from "../../../serveraction/serverActions";
+import { valid } from "../../../serveraction/serverActions";
 import { useFormStatus } from "react-dom";
 import { useActionState, useState } from "react";
-import { ToastContainer, toast, Bounce } from "react-toastify";
+import { ToastContainer, toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function SignupButton() {
@@ -27,33 +27,19 @@ const SignupPage = () => {
     confirmPassword: "",
     role: "",
   });
-  const [submit, actionSubmit] = useActionState(signup, undefined);
-  const [message, setMessage] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
-
+  const [submit, actionSubmit] = useActionState(valid, undefined);
+ 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
-    setMessage(null); // Reset message state before submission
-    setError(null); // Reset error state before submission
-
+  
     
     if (submit?.errors) {
-      setError("Please fix the errors in the form before submitting.");
-      toast.error("Please fix the errors in the form before submitting.", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
+     
+      toast.error("Please fix the errors in the form before submitting.");
       return;
     } else {
       try {
@@ -72,45 +58,12 @@ const SignupPage = () => {
         const data = await res.json();
 
         if (res.ok) {
-          setMessage(data.message || "User registered successfully");
-          toast.success(data.message || "User registered successfully", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            transition: Bounce,
-          });
+          toast.success(data.message);
         } else {
-          setError(data.error || "Failed to create user");
-          toast.error(data.error || "Failed to create user", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            transition: Bounce,
-          });
+          toast.error(data.error);
         }
       } catch (error) {
-        setError("An error occurred while submitting the form.");
-        toast.error("An error occurred while submitting the form.", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          transition: Bounce,
-        });
+        toast.error("An error occurred while submitting the form.");
       }
     }
   };
@@ -273,7 +226,14 @@ const SignupPage = () => {
             {submit.errors.confirmPassword}
           </li>
         )}
-        <ToastContainer />
+        <ToastContainer 
+        position= "top-right"
+        autoClose= {5000}
+        hideProgressBar= {false}
+        closeOnClick= {true}
+        pauseOnHover= {true}
+        draggable= {true}
+        theme= "light"/>
       </div>
     </div>
   );

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import "../globals.css";
 import { useState, useEffect } from "react";
-import { checkCookie } from "@/serveraction/serverActions";
+import { checkCookie, deleteSession } from "@/serveraction/serverActions";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -66,7 +66,7 @@ const Navbar = () => {
             </div>
 
             <div className="grid gap-4">
-              <Link href="/login">Sign Out</Link>
+                <Link href="/" onClick={async () => { await deleteSession(); location.reload(); }}>Sign Out</Link>
             </div>
           </div>
         </nav>
