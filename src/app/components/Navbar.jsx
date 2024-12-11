@@ -22,15 +22,29 @@ const Navbar = () => {
         </div>
         <div className={`grid gap-10 ${isOpen ? "block" : "hidden"} md:grid`}>
           <div className="grid gap-4">
-            <Link href="/">Home</Link>
-            <Link href="/profile">Profile</Link>
-            <Link href="/favorite">Favorite</Link>
-            <Link href="/manual">Manual</Link>
+      
+            <div className=" hover:text-blue-700 transition duration-300 ">
+               <Link href="/">  Home</Link>
+            </div>
+            <div className=" hover:text-blue-700 transition duration-300 ">
+               <Link href="/profile">Profile</Link>
+            </div>
+            <div className=" hover:text-blue-700 transition duration-300 ">
+               <Link href="/favorite">Favorite</Link>
+            </div>
+            <div className=" hover:text-blue-700 transition duration-300 ">
+               <Link href="/manual">Manual</Link>
+            </div>
           </div>
 
           <div className="grid gap-4">
-            <Link href="/login">Login</Link>
-            <Link href="/register">Register</Link>
+            <div className="hover:text-blue-700 transition duration-300 ">
+                <Link href="/login">Login</Link>
+            </div>
+            <div className="hover:text-blue-700 transition duration-300 ">
+                <Link href="/register">Register</Link>
+            </div>
+            
           </div>
         </div>
       </nav>
