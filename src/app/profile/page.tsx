@@ -29,7 +29,9 @@ export function Profile() {
       </div>
       <main className="overflow-auto h-screen w-full">
         Profile
-        <p>{profile.user.username}</p>
+        <p>Username: {profile.user.username}</p>
+        <p>email: {profile.user.email}</p>
+        <p>phone: {profile.user.phone}</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-3 gap-5">
           <div className="shadow-xl my-10 p-5 sm:p-10 rounded-xl">
             <h4>Post Title</h4>
