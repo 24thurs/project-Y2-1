@@ -18,7 +18,7 @@ const LoginForm = () => {
   const [message, formAction] = useActionState(createCell, null); //[ข้อความที่ได้จาก server, action]
 
   return (
-    <div>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <form
         action={formAction}
         className="py-40 text-xl flex flex-col items-center justify-center gap-y-4"
@@ -29,24 +29,24 @@ const LoginForm = () => {
   
         <div className="flex items-center justify-center grid-cols-3 gap-x-5 ">
         <button 
-        className=" w-20 py-1 bg-blue-200 text-white rounded-md ">
-           <Link href="/login" className="text-blue-600 hover:underline" >Login</Link>
+        className=" w-20 py-1 bg-blue-200 rounded-md ">
+           <Link href="/login" className="text-blue-600 " >Login</Link>
         </button>
 
         <button 
-        className=" w-20 py-1 bg-blue-100 text-white rounded-md hover:bg-gray-300">
+        className=" w-20 py-1 bg-blue-100 rounded-md hover:bg-gray-300">
            <Link href="/register" className="text-gray-600 hover:underline">Sign up</Link>
         </button>
           
          </div>
         
-        <div className="grid">
+        <div className="grid ">
         Email
           <input
             placeholder="Name"
             type="text"
             name="name"
-            className=" border"
+            className=" border p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
        
         </div>
@@ -56,7 +56,7 @@ const LoginForm = () => {
             placeholder="Password"
             type="text"
             name="surname"
-            className="border"
+            className="border p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           /> 
         </div>
         <div className="mb-4 "></div>

@@ -23,13 +23,13 @@ const RegisterForm = () => {
    
     <div className="flex items-center justify-center text-xl mb-6 gap-10">
     <button 
-        className=" w-20 py-1 bg-blue-100 text-white rounded-md hover:bg-gray-300 ">
+        className=" w-20 py-1 bg-blue-100  rounded-md hover:bg-gray-300 ">
            <Link href="/login" className="text-gray-600 hover:underline" >Login</Link>
         </button>
 
         <button 
-        className=" w-20 py-1 bg-blue-200 text-white rounded-md">
-           <Link href="/register" className="text-blue-600 hover:underline">Sign up</Link>
+        className=" w-20 py-1 bg-blue-200  rounded-md">
+           <Link href="/register" className="text-blue-600 ">Sign up</Link>
         </button>
     </div>
 
@@ -135,8 +135,7 @@ const RegisterForm = () => {
           Teacher
         </label>
       </div>
-
-     
+       {/* ฝากดูหน่อยอยากเปลี่ยนสีปุ่มตรงนี้ SubmitButton */}
       <div className="text-right ">
         <SubmitButton />
       </div>

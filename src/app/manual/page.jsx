@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 
 const Manual = () => {
   return (
+    <div style={{ backgroundColor: "#EAEFF8", minHeight: "100vh" }}>
     <div className="flex flex-col md:flex-row">
       <div className="md:mr-4">
         <Navbar />
@@ -79,6 +80,7 @@ const Manual = () => {
           </div>
         </div>
       </main>
+    </div>
     </div>
   );
 };

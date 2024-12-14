@@ -11,40 +11,66 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   };
 
+ 
   return (
     <>
-      <nav className="pl-5 pr-5 text-center content-center bg-slate-400">
-        <div className="flex justify-between items-center my-4">
-          <h2>Username</h2>
-          <button className="md:hidden block" onClick={toggleMenu}>
-            ☰
-          </button>
-        </div>
-        <div className={`grid gap-10 ${isOpen ? "block" : "hidden"} md:grid`}>
-          <div className="grid gap-4">
-      
-            <div className=" hover:text-blue-700 transition duration-300 ">
-               <Link href="/">  Home</Link>
-            </div>
-            <div className=" hover:text-blue-700 transition duration-300 ">
-               <Link href="/profile">Profile</Link>
-            </div>
-            <div className=" hover:text-blue-700 transition duration-300 ">
-               <Link href="/favorite">Favorite</Link>
-            </div>
-            <div className=" hover:text-blue-700 transition duration-300 ">
-               <Link href="/manual">Manual</Link>
-            </div>
-          </div>
+      <button
+        className="fixed top-4 left-4 md:hidden bg-[#395886] text-white p-2 rounded z-50 shadow-lg"
+        onClick={toggleMenu}
+      >
+        ☰
+      </button>
 
-          <div className="grid gap-4">
-            <div className="hover:text-blue-700 transition duration-300 ">
-                <Link href="/login">Login</Link>
-            </div>
-            <div className="hover:text-blue-700 transition duration-300 ">
-                <Link href="/register">Register</Link>
-            </div>
-            
+      <nav
+        className={`fixed top-0 left-0 bg-[#395886] text-white z-40 transition-transform duration-300 ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        } md:translate-x-0 md:static w-full md:w-48 h-auto md:h-screen`} 
+        style={{
+          maxHeight: "80vh", 
+          borderRadius: "0 0 10px 10px",
+        }}
+      >
+        <div className="flex flex-col items-center p-4">
+          <h2 className="text-2xl font-bold mb-6">Username</h2>
+          <div className="flex flex-col gap-4 w-full">
+            <Link
+              href="/"
+              className="w-full text-center text-lg hover:bg-white hover:text-black py-2 rounded transition duration-300"
+            >
+              Home
+            </Link>
+            <Link
+              href="/profile"
+              className="w-full text-center text-lg hover:bg-white hover:text-black py-2 rounded transition duration-300"
+            >
+              Profile
+            </Link>
+            <Link
+              href="/favorite"
+              className="w-full text-center text-lg hover:bg-white hover:text-black py-2 rounded transition duration-300"
+            >
+              Favorite
+            </Link>
+            <Link
+              href="/manual"
+              className="w-full text-center text-lg hover:bg-white hover:text-black py-2 rounded transition duration-300"
+            >
+              Manual
+            </Link>
+            <div className="border-t border-white my-4"></div>
+
+            <Link
+              href="/login"
+              className="w-full text-center text-lg hover:bg-green-600 hover:text-black py-2 rounded transition duration-300"
+            >
+              Login
+            </Link>
+            <Link
+              href="/register"
+              className="w-full text-center text-lg hover:bg-green-600 hover:text-black py-2 rounded transition duration-300"
+            >
+              Register
+            </Link>
           </div>
         </div>
       </nav>
