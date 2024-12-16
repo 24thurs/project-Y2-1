@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { connectMongoDB } from "@/config/config";
-import { User } from "@/models/models";
+import { User, Course } from "@/models/models";
 
 export async function GET(req: Request) {
     try {
@@ -12,10 +12,10 @@ export async function GET(req: Request) {
         if (!user) {
             return NextResponse.json({ error: "User not found" }, { status: 404 });
         }
-        console.log(user);
-        return NextResponse.json({ user });
+
+        const course = await Course.find({})
+        return NextResponse.json({ user, course});
     } catch (error) {
-        console.log(error);
         return NextResponse.json(
             { error: "Something went wrong" },
             { status: 500 }

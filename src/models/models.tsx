@@ -36,10 +36,48 @@ const userSchema = new Schema(
 
 export const User = mongoose.models.User || mongoose.model("User", userSchema);
 
-const postSchema = new Schema({
-  title: String,
-  img: String,
-  content: String,
-});
+const courseSchema = new Schema(
+  {
+    img: {
+      type: String,
+    },
+    coursename: {
+      type: String,
+      required: true,
+    },
+    subject: {
+      type: String,
+      required: true,
+    },
+    teacher: {
+      type: String,
+      required: true,
+    },
+    detail: {
+      type: String,
+    },
+    hour: {
+      type: Number,
+      required: true,
+    },
+    totalmember: {
+      type: Number,
+      required: true,
+    },
+    price: {
+      type: Number,
+      required: true,
+    },
+    coursetype: {
+      type: String,
+      required: true,
+    },
+    userid: {
+      type: String,
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
 
-export const Post = mongoose.models.Post || mongoose.model("Post", postSchema);
+export const Course = mongoose.models.Course || mongoose.model("Course", courseSchema);

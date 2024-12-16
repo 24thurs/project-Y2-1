@@ -111,7 +111,7 @@ export async function login(prevState: FormState, formData: FormData) {
   return { message: "user found" };
 }
 
-export const getProfile = async () => {
+export async function getProfile() {
   const cookieStore = await cookies();
   const session = cookieStore.get("session")?.value;
 
@@ -140,6 +140,64 @@ export const getProfile = async () => {
   }
 
   const profile = await response.json();
-  console.log(profile)
+  console.log(profile);
   return profile;
-};
+}
+
+export async function postCourse(formData: FormData) {
+  const cookieStore = await cookies();
+  const session = cookieStore.get("session")?.value;
+  const rawData = Object.fromEntries(formData);
+
+  if (!session) {
+    console.error("Session not found in cookies.");
+    return null;
+  }
+
+  const payload = await decrypt(session);
+  if (!payload) {
+    console.error("Failed to decrypt session.");
+    return null;
+  }
+
+  const userId = payload.userId;
+
+  console.log(allData)
+  const response = await fetch(`http://localhost:3000/api/course`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(allData),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    console.error("Failed to create course");
+    return null;
+  }
+
+  console.log(data.message);
+}
+
+export async function getCourse() {
+  try {
+    const res = await fetch("http://localhost:3000/api/course", {
+      method: "GET",
+      cache: "no-store",
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch courses");
+    }
+
+    const data = await res.json();
+    console.log("Courses data:", data.courses);
+    return data.courses
+
+  } catch (error) {
+    console.log("Error loading posts: ", error);
+    return []
+  }
+}
