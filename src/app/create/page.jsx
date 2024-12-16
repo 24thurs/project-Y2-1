@@ -40,7 +40,6 @@ const CreatePage = () => {
     // Log the form data or submit to an API here
     console.log({
       courseName,
-      courseDetail,
       subject,
       teacher,
       hoursContent,
@@ -57,7 +56,7 @@ const CreatePage = () => {
   return (
     <div style={{ backgroundColor: "#EAEFF8", minHeight: "100vh" }}>
       <div className="container mx-auto py-10 px-5">
-        <div className="flex items-center justify-center w-full max-w-[300px] h-[70px] border-4 border-blue-400 bg-blue-400 p-6 rounded-md">
+        <div className="flex items-center justify-center w-full max-w-[270px] h-[70px] border-4 border-blue-400 bg-blue-400 p-6 rounded-md">
           <h3 className="text-3xl font-bold">Create Course</h3>
         </div>
   
@@ -95,16 +94,6 @@ const CreatePage = () => {
                 className="w-[300px] bg-gray-200 py-2 px-3 rounded text-lg"
                 placeholder="Enter Course name"
                 required
-              />
-            </div>
-  
-            <div className="flex flex-col my-2">
-              <label className="block text-lg mb-2">Enter Course detail</label>
-              <input
-                type="text"
-                className="w-full h-[100px] bg-gray-200 py-2 px-3 rounded text-lg"
-                placeholder="Enter Course detail"
-                required 
               />
             </div>
   
@@ -172,8 +161,9 @@ const CreatePage = () => {
                 />
               </div>
             </div>
-  
+            
             <div className="flex space-x-4 my-4">
+            <label htmlFor="price" className="block text-lg mb-2">Location</label>
               <div className="flex items-center">
                 <input
                   id="online"
@@ -201,7 +191,7 @@ const CreatePage = () => {
             <div className="flex justify-end space-x-4">
               <button
                 type="submit"
-                className="w-[150px] bg-green-500 text-white py-2 px-3 rounded-md text-lg"
+                className="w-[150px] bg-green-500 text-black py-2 px-3 rounded-md text-lg"
               >
                 Create Course
               </button>
@@ -220,3 +210,4 @@ const CreatePage = () => {
   
 };
 export default CreatePage;
+

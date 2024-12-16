@@ -20,11 +20,10 @@ const Navbar = () => {
       >
         ☰
       </button>
-
       <nav
-        className={`fixed top-0 left-0 bg-[#395886] text-white z-40 transition-transform duration-300 ${
+        className={`${
           isOpen ? "translate-x-0" : "-translate-x-full"
-        } md:translate-x-0 md:static w-full md:w-48 h-auto md:h-screen`} 
+        } fixed top-0 left-0 bg-[#395886] text-white z-40 transition-transform duration-300 md:static md:sticky md:top-0 md:z-50 md:w-48 md:h-auto md:translate-x-0 w-full`} 
         style={{
           maxHeight: "80vh", 
           borderRadius: "0 0 10px 10px",
@@ -58,7 +57,7 @@ const Navbar = () => {
               Manual
             </Link>
             <div className="border-t border-white my-4"></div>
-
+  
             <Link
               href="/login"
               className="w-full text-center text-lg hover:bg-green-600 hover:text-black py-2 rounded transition duration-300"
@@ -67,7 +66,7 @@ const Navbar = () => {
             </Link>
             <Link
               href="/register"
-              className="w-full text-center text-lg hover:bg-green-600 hover:text-black py-2 rounded transition duration-300"
+              className="w-full text-center text-lg hover:bg-blue-400 hover:text-black py-2 rounded transition duration-300"
             >
               Register
             </Link>
@@ -76,5 +75,7 @@ const Navbar = () => {
       </nav>
     </>
   );
+  
+  
 };
 export default Navbar;
