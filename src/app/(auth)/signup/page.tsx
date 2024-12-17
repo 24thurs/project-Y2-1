@@ -29,7 +29,7 @@ const SignupPage = () => {
   });
   const [submit, actionSubmit] = useActionState(valid, undefined);
  
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
