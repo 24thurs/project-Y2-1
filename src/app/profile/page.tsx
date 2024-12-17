@@ -21,7 +21,38 @@ export function Profile() {
   }, []);
 
   if (!profile) {
-    return <div>Loading...</div>;
+    return ( 
+    <div className="flex items-center justify-center h-screen bg-gray-200">
+      <div className="bg-gray-300 w-[400px] h-[500px] p-8 rounded-lg shadow-md text-center ">
+        <div className="flex justify-center mb-4">
+          <Image
+            src="/image/icon.png" 
+            alt="access denied"
+            width={300}
+            height={300}
+          />
+        </div>
+
+        <h2 className="text-xl font-bold text-black mb-2">
+          หน้านี้ไม่สามารถเข้าได้
+        </h2>
+        <p className="text-black mb-6">กรุณาเข้าสู่ระบบก่อนใช้งาน</p>
+
+        <div className="flex justify-center space-x-4 mb-4">
+          <button className="bg-blue-500 text-white w-[100px] h-[40px] text-xl rounded-md hover:bg-blue-600 transition">
+          <Link href="/login" >Login</Link>
+          </button>
+          <button className="bg-blue-400 text-white w-[100px] h-[40px] text-xl rounded-md hover:bg-blue-600 transition">
+          <Link href="/signup" >Sign up</Link>
+          </button>
+        </div>
+        <button className="bg-gray-400 text-white w-[100px] h-[40px] text-xl rounded-md hover:bg-gray-600 transition">
+          <Link href="/" >Back</Link>
+          </button>
+      </div>
+    </div>
+  
+    )
   }
 
   return (

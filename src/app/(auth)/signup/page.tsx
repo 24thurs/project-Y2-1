@@ -11,12 +11,16 @@ function SignupButton() {
   const { pending } = useFormStatus();
 
   return (
-    <button aria-disabled={pending} type="submit" className="mt-2 w-full">
+    <button
+      aria-disabled={pending}
+      type="submit"
+      className="w-[100px] py-1 text-white rounded-md ml-auto bg-blue-400 hover:bg-600"
+ 
+    >
       {pending ? "Submitting..." : "Submit"}
     </button>
   );
 }
-
 const SignupPage = () => {
   const [formData, setFormData] = useState({
     userName: "",
@@ -69,87 +73,101 @@ const SignupPage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center gap-y-4">
-      <div>
-        <div className="grid grid-cols-2 gap-x-</button>3 text-center text-xl my-3">
-          <Link href="/login">Login</Link>
-          <Link href="/signup">Sign up</Link>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 text-xl">
+       <div className="border border-gray-300 bg-blue-100 p-6 rounded-md max-w-2xl w-full shadow-lg">
+         <div className="flex justify-center mb-4">
+            <img src="/image/logo.png" 
+            alt="Iogo" 
+            className="w-30 h-20 object-cover rounded-full  " />
+          </div>
+      <div className="flex items-center justify-center text-xl grid-cols-3 gap-x-5 ">
+           <button 
+              className=" w-20 py-1 bg-gray-200 rounded-md hover:bg-gray-400 ">
+              <Link href="/login" className="text-gray-600 " >Login</Link>
+           </button>
+
+           <button 
+              className="  w-20 py-1 bg-blue-300 rounded-md">
+              <Link href="/signup" className="text-blue-800 ">Sign up</Link>
+           </button>
         </div>
         <hr />
+        <div className="mb-4"></div>
         <form
           onSubmit={handleSubmit}
           action={actionSubmit}
           className="text-xl grid grid-cols-1 sm:grid-cols-2 items-center justify-center gap-x-4 gap-y-3"
         >
-          <div className="grid min-w-[300px]">
+        
+          <div className="grid gap-3">
             Username
             <input
               placeholder="username"
               type="text"
               name="userName"
-              className="border"
+              className=" border p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
               value={formData.userName}
               onChange={handleChange}
             />
           </div>
-          <div className="grid">
+          <div className="grid gap-3">
             Name - Surname
             <input
               placeholder="Name - Surname"
               type="text"
               name="fullName"
-              className="border"
+              className=" border p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
               value={formData.fullName}
               onChange={handleChange}
             />
           </div>
 
-          <div className="grid">
+          <div className="grid gap-3">
             Email
             <input
               placeholder="Email"
               type="email"
               name="email"
-              className="border"
+              className=" border p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
               value={formData.email}
               onChange={handleChange}
             />
           </div>
-          <div className="grid">
+          <div className="grid gap-3">
             phone number
             <input
               placeholder="phone number"
               pattern="[0-9]*"
               type="tel"
               name="phone"
-              className="border"
+              className=" border p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
               value={formData.phone}
               onChange={handleChange}
             />
           </div>
-          <div className="grid">
+          <div className="grid gap-3">
             Password
             <input
               placeholder="Password"
               type="password"
               name="password"
-              className="border"
+              className=" border p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
               value={formData.password}
               onChange={handleChange}
             />
           </div>
-          <div className="grid">
+          <div className="grid gap-3">
             Confirm password
             <input
               placeholder="Password"
               type="password"
               name="confirmPassword"
-              className="border"
+              className=" border p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
               value={formData.confirmPassword}
               onChange={handleChange}
@@ -238,4 +256,5 @@ const SignupPage = () => {
     </div>
   );
 };
+
 export default SignupPage;

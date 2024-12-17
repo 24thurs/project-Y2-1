@@ -32,15 +32,16 @@ const Navbar = () => {
     return (
       <>
         <nav
-          className="pl-5 pr-5 text-center content-center bg-slate-400 bg-[#395886] text-white z-40 transition-transform duration-300"
+          className="pl-5 pr-5 text-center content-center bg-slate-[#395886] bg-[#395886] text-white z-40 transition-transform duration-300"
           style={{
-            maxHeight: "80vh",
+            maxHeight: "100vh",
             borderRadius: "0 0 10px 10px",
           }}
         >
-          <div className="flex justify-between items-center my-4">
-            <h2>Username</h2>
-            <button className="md:hidden block" onClick={toggleMenu}>
+          <div className="flex justify-between items-center p-4">
+            <h2 className="text-xl">Username</h2>
+            <button className="fixed top-2 right-4 md:hidden bg-[#395886] text-white p-2 rounded z-50 shadow-lg"
+              onClick={toggleMenu}>
               ☰
             </button>
           </div>
@@ -49,47 +50,103 @@ const Navbar = () => {
               isOpen ? "block" : "hidden"
             } md:grid bg-[#395886] text-white z-40 transition-transform duration-300`}
           >
-            <div className="flex flex-col gap-4 w-full">
-              <Link
-                href="/"
-                className="w-full text-center text-lg hover:bg-white hover:text-black py-2 rounded transition duration-300"
-              >
-                Home
-              </Link>
-              <Link
-                href="/profile"
-                className="w-full text-center text-lg hover:bg-white hover:text-black py-2 rounded transition duration-300"
-              >
-                Profile
-              </Link>
-              <Link
-                href="/favorite"
-                className="w-full text-center text-lg hover:bg-white hover:text-black py-2 rounded transition duration-300"
-              >
-                Favorite
-              </Link>
-              <Link
-                href="/manual"
-                className="w-full text-center text-lg hover:bg-white hover:text-black py-2 rounded transition duration-300"
-              >
-                Manual
-              </Link>
-              <div className="border-t border-white my-4"></div>
-
-              <Link
-                href="/login"
-                className="w-full text-center text-lg hover:bg-green-600 hover:text-black py-2 rounded transition duration-300"
-              >
-                Login
-              </Link>
-              <Link
-                href="/register"
-                className="w-full text-center text-lg hover:bg-blue-400 hover:text-black py-2 rounded transition duration-300"
-              >
-                Register
-              </Link>
-            </div>
+          <div className="flex flex-col gap-4 w-full h-screen">
+          <Link
+              href="/"
+              className="w-full text-center text-lg py-2 rounded transition duration-300 flex items-center justify-center group hover:bg-white hover:text-black"
+          >
+              <div className="relative flex items-center justify-center mr-2">
+                  <img
+                      src="/image/home2.png"
+                      alt="home2"
+                      className="h-7 w-7 transition-opacity duration-300 group-hover:opacity-0"
+                  />
+                  <img
+                      src="/image/home.png"
+                      alt="home"
+                      className="h-7 w-7 absolute top-0 left-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                  />
+              </div>
+              <span className="transition-colors duration-300 group-hover:text-black">
+                    Home
+              </span>
+          </Link>
+          <Link
+              href="/profile"
+              className="w-full text-center text-lg py-2 rounded transition duration-300 flex items-center justify-center group hover:bg-white hover:text-black"
+          >
+              <div className="relative flex items-center justify-center mr-2">
+                  <img
+                      src="/image/profile2.png"
+                      alt="profile2"
+                      className="h-7 w-7 transition-opacity duration-300 group-hover:opacity-0"
+                  />
+                  <img
+                      src="/image/profile.png"
+                      alt="profile"
+                      className="h-7 w-7 absolute top-0 left-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                  />
+              </div>
+              <span className="transition-colors duration-300 group-hover:text-black">
+                  Profile
+              </span>
+          </Link>
+          <Link
+              href="/favorite"
+              className="w-full text-center text-lg py-2 rounded transition duration-300 flex items-center justify-center group hover:bg-white hover:text-black"
+          >
+              <div className="relative flex items-center justify-center mr-2">
+                  <img
+                      src="/image/Review2.png"
+                      alt="Review2"
+                      className="h-7 w-7 transition-opacity duration-300 group-hover:opacity-0"
+                  />
+                  <img
+                      src="/image/Review.png"
+                      alt="Review"
+                      className="h-6 w-6 absolute top-0 left-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                  />
+              </div>
+              <span className="transition-colors duration-300 group-hover:text-black">
+                Review
+              </span>
+          </Link>
+          <Link
+               href="/manual"
+              className="w-full text-center text-lg py-2 rounded transition duration-300 flex items-center justify-center group hover:bg-white hover:text-black"
+          >
+              <div className="relative flex items-center justify-center mr-2">
+                  <img
+                      src="/image/manual2.png"
+                      alt="manual2"
+                      className="h-7 w-7 transition-opacity duration-300 group-hover:opacity-0"
+                  />
+                  <img
+                      src="/image/manual.png"
+                      alt="manual"
+                      className="h-7 w-7 absolute top-0 left-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                  />
+              </div>
+              <span className="transition-colors duration-300 group-hover:text-black">
+              Manual
+              </span>
+          </Link>
+            <div className="border-t border-white my-4"></div>
+  
+            <Link
+              href="/login"
+              className="w-full text-center text-lg hover:bg-green-600 hover:text-black py-2 rounded transition duration-300"
+            >
+              Login
+            </Link>
+            <Link
+              href="/register"
+              className="w-full text-center text-lg hover:bg-blue-400 hover:text-black py-2 rounded transition duration-300"
+            >
+              Register
+            </Link>
           </div>
+        </div>
         </nav>
       </>
     );
@@ -104,7 +161,7 @@ const Navbar = () => {
             </button>
           </div>
           <div className={`grid gap-10 ${isOpen ? "block" : "hidden"} md:grid`}>
-            <div className="flex flex-col gap-4 w-full">
+          <div className="flex flex-col gap-4 w-[100px] h-[650px]">
               <Link
                 href="/"
                 className="w-full text-center text-lg hover:bg-white hover:text-black py-2 rounded transition duration-300"

@@ -54,18 +54,28 @@ function Home() {
         <Navbar/>
       </div>
       <main className="container mx-auto my-6 px-4">
-       <div className="flex justify-center items-center">
+       <div className=" w-full flex justify-center items-center">
             <input 
                   type="text" 
-                  placeholder="ค้นหา..." 
+                  placeholder="Search..." 
                   className="w-full max-w-xl p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
                   />
         <button className="bg-[#6699FF] text-white px-6 py-2 rounded-r-lg hover:bg-blue-600 transition duration-300">
-           ค้นหา
+        <div className="group relative">
+            <img
+                src="/image/Search2.png"
+                alt="Search2"
+                className="h-7 w-7 transition-opacity duration-300 group-hover:opacity-0"
+            />
+            <img
+                src="/image/Search.png"
+                alt="Search"
+                className="h-7 w-7 absolute top-0 left-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+            />
+        </div>
         </button>
        </div>
        
-
         <div className="container mx-auto">
           <div className="flex justify-center my-10">
             <button className="bg-[#6699FF] text-xl text-white font-bold py-2 px-4 rounded-full">
@@ -76,32 +86,47 @@ function Home() {
                <div className="flex justify-center gap-5 flex-wrap max-w-screen-md mx-auto">
               <button className="bg-[#83AEEC] hover:bg-gray-300 text-gray-800 font-bold py-6 px-4 rounded-lg transition duration-300 ease-in-out">
                   <div className="flex flex-col items-center">
-                     <img src="https://i.imgur.com/O72V95X.png" alt="ภาษา" className="w-12" />
-                     <p className="text-lg mt-2">ภาษาต่างประเทศ</p>
+                     <img 
+                     src="/image/English.png"
+                     alt="Englsih" 
+                     className="w-20" />
+                     <p className="text-lg mt-2">English</p>
                   </div>
               </button>
               <button className="bg-[#83AEEC] hover:bg-gray-300 text-gray-800 font-bold py-6 px-4 rounded-lg transition duration-300 ease-in-out">
                   <div className="flex flex-col items-center">
-                     <img src="https://i.imgur.com/O72V95X.png" alt="ภาษา" className="w-12" />
-                     <p className="text-lg mt-2">คณิตศาสตร์</p>
+                  <img 
+                     src="/image/Math.png"
+                     alt="Math" 
+                     className="w-20" />
+                     <p className="text-lg mt-2">Math</p>
                   </div>
               </button>
               <button className="bg-[#83AEEC] hover:bg-gray-300 text-gray-800 font-bold py-6 px-4 rounded-lg transition duration-300 ease-in-out">
                   <div className="flex flex-col items-center">
-                     <img src="https://i.imgur.com/O72V95X.png" alt="ภาษา" className="w-12" />
-                     <p className="text-lg mt-2">วิทยาศาสตร์</p>
+                  <img 
+                     src="/image/Computer.png"
+                     alt="Computer" 
+                     className="w-20" />
+                     <p className="text-lg mt-2">Computer</p>
                   </div>
               </button>
               <button className="bg-[#83AEEC] hover:bg-gray-300 text-gray-800 font-bold py-6 px-4 rounded-lg transition duration-300 ease-in-out">
                   <div className="flex flex-col items-center">
-                     <img src="https://i.imgur.com/O72V95X.png" alt="ภาษา" className="w-12" />
-                     <p className="text-lg mt-2">ภาษาไทย</p>
+                  <img 
+                     src="/image/History.png"
+                     alt="History" 
+                     className="w-20" />
+                     <p className="text-lg mt-2">History</p>
                   </div>
               </button>
               <button className="bg-[#83AEEC] hover:bg-gray-300 text-gray-800 font-bold py-6 px-4 rounded-lg transition duration-300 ease-in-out">
                   <div className="flex flex-col items-center">
-                     <img src="https://i.imgur.com/O72V95X.png" alt="ภาษา" className="w-12" />
-                     <p className="text-lg mt-2">โปรแกรมมิ่ง</p>
+                  <img 
+                     src="/image/Science.png"
+                     alt="Science" 
+                     className="w-20" />
+                     <p className="text-lg mt-2">Science</p>
                   </div>
               </button>
               </div>
