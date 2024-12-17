@@ -17,7 +17,8 @@ export async function GET(req: Request) {
       $or: [
         { courseName: { $regex: query, $options: "i" } },
         { subject: { $regex: query, $options: "i" } },
-        { teacher: { $regex: query, $options: "i" } }
+        { teacher: { $regex: query, $options: "i" } },
+        { detail: { $regex: query, $options: "i" } }
       ]
     });
 
