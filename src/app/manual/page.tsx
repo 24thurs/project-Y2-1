@@ -57,41 +57,49 @@ const Manual = () => {
       <div className="md:mr-4">
         <Navbar />
       </div>
-      <div className="w-full max-w-md mx-auto mt-8">
-  {guides.map((guide, index) => (
-    <div key={guide.id} className="mb-2">
-      <button
-        onClick={() => toggleDropdown(index)} 
-        className="flex justify-between items-center w-full bg-gray-300 rounded-lg p-4"
-      >
-        <div className="flex items-center">
-          <Image
-            src={guide.image} 
-            alt={guide.title}
-            width={90}
-            height={90}
-            className="mr-4"
-          />
-          <span className="font-bold text-black">{guide.title}</span>
-        </div>
-        <span
-          className={`transform transition-transform ${
-            openIndex === index ? "rotate-180" : "rotate-0"
-          }`}
-        >
-          ▼
-        </span>
-      </button>
-      {openIndex === index && (
-        <div className="bg-gray-200 p-4 rounded-b-lg">
-          <p>{guide.content}</p>
-        </div>
-      )}
-    </div>
-  ))}
-</div>
+      <div className="w-full max-w-3xl mx-auto mt-8 flex-grow flex flex-col justify-center">
+         <div className="w-full text-center mt-8">
+         <h1 className="text-5xl font-bold text-[#333]"> 
+          Manual
+          </h1>
+        <hr className="w-full mx-auto border-t-4 border-gray-400 my-4" />
+      </div>
+      
+        {guides.map((guide, index) => (
+          <div key={guide.id} className="mb-2">
+            <button
+              onClick={() => toggleDropdown(index)}
+              className="flex justify-between items-center w-full bg-[#8AAEE0] rounded-lg p-4"
+            >
+              <div className="flex items-center">
+                <Image
+                  src={guide.image}
+                  alt={guide.title}
+                  width={90}
+                  height={90}
+                  className="mr-4"
+                />
+                <span className="font-bold text-black">{guide.title}</span>
+              </div>
+              <span
+                className={`transform transition-transform ${
+                  openIndex === index ? "rotate-180" : "rotate-0"
+                }`}
+              >
+                ▼
+              </span>
+            </button>
+            {openIndex === index && (
+              <div className="bg-[#b9ceea] p-4 rounded-b-lg">
+                <p>{guide.content}</p>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
+  
 };
 
 export default Manual;

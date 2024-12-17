@@ -58,9 +58,9 @@ function Home() {
             <input 
                   type="text" 
                   placeholder="Search..." 
-                  className="w-full max-w-xl p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  className="w-full max-w-[1100px] text-xl p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
                   />
-        <button className="bg-[#6699FF] text-white px-6 py-2 rounded-r-lg hover:bg-blue-600 transition duration-300">
+        <button className="bg-[#638ECB] text-white px-6 py-2 rounded-r-lg hover:bg-[#638ECB]transition duration-300">
         <div className="group relative">
             <img
                 src="/image/Search2.png"
@@ -78,7 +78,7 @@ function Home() {
        
         <div className="container mx-auto">
           <div className="flex justify-center my-10">
-            <button className="bg-[#6699FF] text-xl text-white font-bold py-2 px-4 rounded-full">
+            <button className="bg-[#638ECB] text-xl text-white font-bold py-2 px-4 rounded-full">
                Choose Subject
             </button>
             </div>
@@ -132,7 +132,7 @@ function Home() {
               </div>
     
         <hr className="my-3" />
-        <button className="bg-[#6699FF] text-xl p-3 text-white font-bold rounded-full">
+        <button className="bg-[#638ECB] text-xl p-3 text-white font-bold rounded-full">
             Class Subject
         </button>
       <div className="flex justify-end items-center my-8 space-x-4  ">
