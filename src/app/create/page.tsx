@@ -98,12 +98,12 @@ const CreatePage = () => {
             {/* Image URL */}
             <label className="text-gray-700">Image URL</label>
             <input
-  type="text"
-  className="w-full py-2 px-4 border rounded-xl bg-white focus:bg-white focus:outline-none focus:ring-0"
-  placeholder="Image URL"
-  name="img"
-  onChange={(e) => setImageUrl(e.target.value)}
-/>
+              type="text"
+              className="w-full py-2 px-4 border rounded-xl bg-white focus:bg-white focus:outline-none focus:ring-0"
+              placeholder="Image URL"
+              name="img"
+              onChange={(e) => setImageUrl(e.target.value)}
+            />
 
 
             {/* Course Name */}
