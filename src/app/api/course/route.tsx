@@ -46,3 +46,16 @@ export const GET = async () => {
   return NextResponse.json({ courses });
 };
 
+export const DELETE = async (req: Request) => {
+  const url = new URL(req.url);
+  const id = url.searchParams.get("id");
+
+  if (!id) {
+    return NextResponse.json({ error: "Missing course ID" }, { status: 400 });
+  }
+
+  await connectMongoDB();
+  await Course.findByIdAndDelete(id);
+  return NextResponse.json({ message: "Course deleted successfully" }, { status: 200 });
+};
+

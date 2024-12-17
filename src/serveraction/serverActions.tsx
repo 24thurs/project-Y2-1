@@ -84,7 +84,7 @@ export async function deleteSession(currentPath: string) {
 
 export async function login(prevState: FormState, formData: FormData) {
   const email = formData.get("email");
-  const password = formData.get("password");
+  const password = formData.get("password") as string;
 
   const resCheckUser = await fetch("http://localhost:3000/api/checkUser", {
     method: "POST",
@@ -99,7 +99,7 @@ export async function login(prevState: FormState, formData: FormData) {
     return { message: "user not found" };
   }
   const data = await resCheckUser.json();
-  const passwordMatch = bcrypt.compare(password, data.user.password);
+  const passwordMatch = await bcrypt.compare(password, data.user.password);
 
   if (!passwordMatch) {
     return { message: "wrong user or password" };
@@ -162,7 +162,9 @@ export async function postCourse(formData: FormData) {
 
   const userId = payload.userId;
 
-  console.log(allData)
+  const allData = { ...rawData, userId };
+
+  console.log(allData);
   const response = await fetch(`http://localhost:3000/api/course`, {
     method: "POST",
     headers: {
@@ -174,7 +176,7 @@ export async function postCourse(formData: FormData) {
   const data = await response.json();
 
   if (!response.ok) {
-    console.error("Failed to create course");
+    console.error(data.error);
     return null;
   }
 
@@ -193,11 +195,70 @@ export async function getCourse() {
     }
 
     const data = await res.json();
-    console.log("Courses data:", data.courses);
-    return data.courses
-
+    return data.courses;
   } catch (error) {
     console.log("Error loading posts: ", error);
-    return []
+    return [];
+  }
+}
+
+export async function getCourseById(course_id: string) {
+  try {
+    const res = await fetch(`http://localhost:3000/api/course/${course_id}`, {
+      method: "GET",
+      cache: "no-store",
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch courses");
+    }
+
+    const data = await res.json();
+    console.log("Courses data:", data);
+    return data;
+  } catch (error) {
+    console.log("Error loading posts: ", error);
+    return [];
+  }
+}
+
+export async function updateCourse(course_id: string, formData: FormData) {
+  const cookieStore = await cookies();
+  const session = cookieStore.get("session")?.value;
+  const rawData = Object.fromEntries(formData);
+
+  if (!session) {
+    console.error("Session not found in cookies.");
+    return null;
+  }
+
+  const payload = await decrypt(session);
+  if (!payload) {
+    console.error("Failed to decrypt session.");
+    return null;
+  }
+
+  const userId = payload.userId;
+  const allData = { ...rawData, userId };
+
+  console.log(allData)
+
+  try {
+    const res = await fetch(`http://localhost:3000/api/course/${course_id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(allData),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      console.log(data.error)
+      throw new Error("Failed to update course");
+    }
+  } catch (error) {
+    return;
   }
 }

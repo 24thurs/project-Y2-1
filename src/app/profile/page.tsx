@@ -5,10 +5,11 @@ import Navbar from "../components/Navbar";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import DeleteBtn from "../components/DeleteBtn";
 
 export function Profile() {
   const [profile, setProfile] = useState<any>(null);
-  const [courseData, setCourseData] = useState([]);
+  const [courseData, setCourseData] = useState<{ _id: string; img: string; coursename: string; teacher: string; subject: string; coursetype: string; totalmember: number; price: number; }[]>([]);
 
   useEffect(() => {
     async function fetchProfile() {
@@ -38,7 +39,7 @@ export function Profile() {
             courseData.map((val) => {
               return (
                 <div
-                  key={val.userid}
+                  key={val._id}
                   className="bg-white rounded-lg shadow-md overflow-hidden"
                 >
                   <Image
@@ -75,16 +76,11 @@ export function Profile() {
                     <div className="mt-5 flex space-x-3">
               <Link
                 className="bg-gray-500 text-white border py-2 px-3 rounded-md text-lg"
-                href="/edit"
+                href={`/edit/${val._id}`}
               >
                 Edit
               </Link>
-              <Link
-                className="bg-red-500 text-white border py-2 px-3 rounded-md text-lg"
-                href="/edit"
-              >
-                Delete
-              </Link>
+              <DeleteBtn course_id={val._id} />
             </div>
                   </div>
                   

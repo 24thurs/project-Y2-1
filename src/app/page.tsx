@@ -8,7 +8,18 @@ import { getCourse } from "@/serveraction/serverActions";
 
 function Home() {
   //JavaScript
-  const [courseData, setCourseData] = useState([]);
+  interface Course {
+    _id: string;
+    img: string;
+    coursename: string;
+    teacher: string;
+    subject: string;
+    coursetype: string;
+    totalmember: number;
+    price: number;
+  }
+
+  const [courseData, setCourseData] = useState<Course[]>([]);
 
   useEffect(() => {
     async function fetchCourses() {
@@ -205,7 +216,7 @@ function Home() {
         {courseData && courseData.length > 0 ? (
           courseData.map((val) => {
             return (
-              <div key={val.userid} className="bg-white rounded-lg shadow-md overflow-hidden">
+              <div key={val._id} className="bg-white rounded-lg shadow-md overflow-hidden">
                 <Image 
                   className="w-full h-48 object-cover"
                   src={val.img}
