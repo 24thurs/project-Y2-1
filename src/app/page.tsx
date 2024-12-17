@@ -216,28 +216,30 @@ function Home() {
         {courseData && courseData.length > 0 ? (
           courseData.map((val) => {
             return (
-              <div key={val._id} className="bg-white rounded-lg shadow-md overflow-hidden">
-                <Image 
-                  className="w-full h-48 object-cover"
-                  src={val.img}
-                  width={100}
-                  height={100}
-                  alt={val.coursename}
-                  priority
-                />
-                <div className="p-4">
-                    <h3 className="text-xl font-bold text-gray-800">{val.coursename}</h3>
-                    <div className="flex justify-2 items-center text-m space-x-2  ">
+                <Link href={`/coursedetail/${val._id}`} key={val._id}>
+                  <div className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transform transition-transform duration-300 hover:scale-105 hover:shadow-lg">
+                    <Image 
+                      className="w-full h-48 object-cover"
+                      src={val.img}
+                      width={100}
+                      height={100}
+                      alt={val.coursename}
+                      priority
+                    />
+                    <div className="p-4">
+                      <h3 className="text-xl font-bold text-gray-800">{val.coursename}</h3>
+                      <div className="flex justify-2 items-center text-m space-x-2">
                         <p className="text-sm text-gray-500">Teacher: {val.teacher}</p>
                       </div>
                       <p className="text-sm text-gray-500">Subject: {val.subject}</p>
-                      <p className="text-sm text-gray-500">location: {val.coursetype}</p>
-                    <div className="flex justify-between items-center mt-1">
+                      <p className="text-sm text-gray-500">Location: {val.coursetype}</p>
+                      <div className="flex justify-between items-center mt-1">
                         <p className="text-sm text-gray-500">จำนวนคน: {val.totalmember} คน</p>
                         <p className="text-lg text-green-600 font-semibold">{val.price} บาท / คน</p>
+                      </div>
                     </div>
-                </div>
-              </div>
+                  </div>
+                </Link>
             );
           })
         ) : (
