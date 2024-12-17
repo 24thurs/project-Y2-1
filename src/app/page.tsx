@@ -7,7 +7,6 @@ import Image from "next/image";
 import { getCourse } from "@/serveraction/serverActions";
 
 function Home() {
-  //JavaScript
   interface Course {
     _id: string;
     img: string;
@@ -20,11 +19,12 @@ function Home() {
   }
 
   const [courseData, setCourseData] = useState<Course[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
 
   useEffect(() => {
     async function fetchCourses() {
       const courses = await getCourse();
-      setCourseData(courses || []); // Ensure courseData is set to an empty array if courses is undefined
+      setCourseData(courses || []);
     }
 
     fetchCourses();
@@ -47,6 +47,36 @@ function Home() {
     setIsOpen(false);
   };
 
+  const [searchTerm, setSearchTerm] = useState('');
+  const [results, setResults] = useState([]);
+
+  const handleSearch = async () => {
+    if (searchTerm.trim() === '') {
+      setIsSearching(false);
+      setResults([]);
+      return;
+    }
+
+    setIsSearching(true);
+    try {
+      const response = await fetch(`/api/search?query=${searchTerm}`);
+      const data = await response.json();
+      setResults(data);
+
+      if (response.ok){
+        console.log(results)
+      }
+    } catch (error) {
+      console.error('Error fetching search results:', error);
+    }
+  };
+
+  useEffect(() => {
+    if (searchTerm.trim() === '') {
+      handleSearch();
+    }
+  }, [searchTerm]);
+
   return (
     <div style={{ backgroundColor: "#EAEFF8", minHeight: "100vh" }}>
     <div className="flex flex-col md:flex-row">
@@ -54,18 +84,30 @@ function Home() {
         <Navbar/>
       </div>
       <main className="container mx-auto my-6 px-4">
-       <div className="flex justify-center items-center">
-            <input 
-                  type="text" 
-                  placeholder="ค้นหา..." 
-                  className="w-full max-w-xl p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
-                  />
-        <button className="bg-[#6699FF] text-white px-6 py-2 rounded-r-lg hover:bg-blue-600 transition duration-300">
-           ค้นหา
-        </button>
-       </div>
+      <div className="flex justify-center items-center">
+           <input 
+        type="text" 
+        placeholder="ค้นหา..." 
+        className="w-full max-w-xl p-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        />
+       {searchTerm && (
+         <button 
+           className="bg-red-500 text-white px-4 py-2 rounded-r-lg hover:bg-red-600 transition duration-300"
+           onClick={() => setSearchTerm('')}
+         >
+           Clear
+         </button>
+       )}
+       <button 
+         className="bg-[#6699FF] text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition duration-300 ml-2"
+         onClick={handleSearch}
+       >
+          ค้นหา
+       </button>
+      </div>
        
-
         <div className="container mx-auto">
           <div className="flex justify-center my-10">
             <button className="bg-[#6699FF] text-xl text-white font-bold py-2 px-4 rounded-full">
@@ -212,8 +254,7 @@ function Home() {
       </div>
         
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        
-        {courseData && courseData.length > 0 ? (
+        {!isSearching && courseData && courseData.length > 0 ? (
           courseData.map((val) => {
             return (
                 <Link href={`/coursedetail/${val._id}`} key={val._id}>
@@ -234,8 +275,8 @@ function Home() {
                       <p className="text-sm text-gray-500">Subject: {val.subject}</p>
                       <p className="text-sm text-gray-500">Location: {val.coursetype}</p>
                       <div className="flex justify-between items-center mt-1">
-                        <p className="text-sm text-gray-500">จำนวนคน: {val.totalmember} คน</p>
-                        <p className="text-lg text-green-600 font-semibold">{val.price} บาท / คน</p>
+                        <p className="text-sm text-gray-500">required: {val.totalmember} person</p>
+                        <p className="text-lg text-green-600 font-semibold">{val.price} Baht / person</p>
                       </div>
                     </div>
                   </div>
@@ -243,9 +284,42 @@ function Home() {
             );
           })
         ) : (
-          <p className="bg-gray-500 p-3 my-3"> Not have any post yet</p>
+          !isSearching && <p className="bg-gray-500 p-3 my-3"> No course available yet</p>
         )}
       </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {isSearching && results.length > 0 ? (
+              results.map((result) => (
+                <Link href={`/coursedetail/${result._id}`} key={result._id}>
+                  <div className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transform transition-transform duration-300 hover:scale-105 hover:shadow-lg">
+                    <Image 
+                      className="w-full h-48 object-cover"
+                      src={result.img}
+                      width={100}
+                      height={100}
+                      alt={result.coursename}
+                      priority
+                    />
+                    <div className="p-4">
+                      <h3 className="text-xl font-bold text-gray-800">{result.coursename}</h3>
+                      <div className="flex justify-2 items-center text-m space-x-2">
+                        <p className="text-sm text-gray-500">Teacher: {result.teacher}</p>
+                      </div>
+                      <p className="text-sm text-gray-500">Subject: {result.subject}</p>
+                      <p className="text-sm text-gray-500">Location: {result.coursetype}</p>
+                      <div className="flex justify-between items-center mt-1">
+                        <p className="text-sm text-gray-500">required: {result.totalmember} person</p>
+                        <p className="text-lg text-green-600 font-semibold">{result.price} Baht / person</p>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              ))
+            ) : (
+              isSearching && <p className="bg-gray-500 p-3 my-3">No results found</p>
+            )}
+          </div>
 
       </main>
     </div>

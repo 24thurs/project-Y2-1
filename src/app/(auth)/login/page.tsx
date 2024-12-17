@@ -7,11 +7,11 @@ import { ToastContainer, toast, Bounce } from "react-toastify";
 
 const LoginPage = () => {
   const initState = {
-    message: '',
-    error: ''
+    message: "",
+    error: "",
   };
 
-  const [state, formAction] = useActionState(login, initState)
+  const [state, formAction] = useActionState(login, initState);
 
   return (
     <div>
@@ -42,11 +42,17 @@ const LoginPage = () => {
           />
         </div>
         <button className="bg-green-500">Log In</button>
-        <div>
-          Message: {state.message}
-        </div>
+        <div>Message: {state.message}</div>
       </form>
-      <ToastContainer/>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        closeOnClick={true}
+        pauseOnHover={true}
+        draggable={true}
+        theme="light"
+      />
     </div>
   );
 };

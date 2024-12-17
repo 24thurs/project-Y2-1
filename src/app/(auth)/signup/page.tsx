@@ -4,7 +4,7 @@ import Link from "next/link";
 import { valid } from "../../../serveraction/serverActions";
 import { useFormStatus } from "react-dom";
 import { useActionState, useState } from "react";
-import { ToastContainer, toast} from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function SignupButton() {
@@ -28,17 +28,15 @@ const SignupPage = () => {
     role: "",
   });
   const [submit, actionSubmit] = useActionState(valid, undefined);
- 
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
-  
-    
+
     if (submit?.errors) {
-     
       toast.error("Please fix the errors in the form before submitting.");
       return;
     } else {
@@ -46,7 +44,7 @@ const SignupPage = () => {
         const formElement = event.currentTarget as HTMLFormElement;
         const formData = new FormData(formElement);
         const formDataObject = Object.fromEntries(formData.entries());
-        
+
         const res = await fetch("/api/signup", {
           method: "POST",
           headers: {
@@ -59,10 +57,14 @@ const SignupPage = () => {
 
         if (res.ok) {
           toast.success(data.message);
+          setTimeout(() => {
+            window.location.href = "/login";
+          }, 2000);
         } else {
           toast.error(data.error);
         }
       } catch (error) {
+        console.log(error);
         toast.error("An error occurred while submitting the form.");
       }
     }
@@ -226,14 +228,15 @@ const SignupPage = () => {
             {submit.errors.confirmPassword}
           </li>
         )}
-        <ToastContainer 
-        position= "top-right"
-        autoClose= {5000}
-        hideProgressBar= {false}
-        closeOnClick= {true}
-        pauseOnHover= {true}
-        draggable= {true}
-        theme= "light"/>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          closeOnClick={true}
+          pauseOnHover={true}
+          draggable={true}
+          theme="light"
+        />
       </div>
     </div>
   );
