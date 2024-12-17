@@ -4,35 +4,39 @@
 import Link from "next/link";
 import { postCourse } from "@/serveraction/serverActions";
 import { useState } from "react";
+import Navbar from "../components/Navbar";
 
 const CreatePage = () => {
   const [imageUrl, setImageUrl] = useState("");
 
   return (
-    <div className="mx-auto py-10 px-5">
+    <div className="mx-auto py-10 px-5 flex flex-col md:flex-row">
+      <div className="md:mr-4">
+        <Navbar />
+      </div>
       <div className="flex items-center justify-center w-[260px] h-[70px] border-4 border-blue-400 bg-blue-400 p-6">
         <h3 className="text-3xl font-bold">Create Course</h3>
       </div>
       <hr className="my-3" />
       <form action={postCourse} className="grid">
         <div className="flex flex-col border-4 border-blue-100 bg-blue-100 p-6">
-            {imageUrl && (
+          {imageUrl && (
             <img
               src={imageUrl}
               alt="Course Image"
               className="w-[400px] h-auto my-2"
               onError={() => setImageUrl("")}
             />
-            )}
-            <input
+          )}
+          <input
             type="text"
             className="w-[800px] py-2 px-3 rounded text-lg my-2"
             placeholder="Image URL" // ใส่ URL รูป
             name="img"
             onChange={(e) => setImageUrl(e.target.value)}
-            />
-            
-            <input
+          />
+
+          <input
             type="text"
             className="w-[700px] py-2 px-3 rounded text-lg my-2"
             placeholder="Course name" // ชื่อคอร์ส
