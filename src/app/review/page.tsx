@@ -83,15 +83,21 @@ const ReviewPage = () => {
       </div>
 
       <main className="flex-1 p-8 bg-white">
-        <h2 className="text-2xl font-bold text-center mb-6">
-          รีวิวคอร์สเรียนและผู้สอน
-        </h2>
+        <div className="flex justify-center mb-2">
+          <div className="bg-blue-500 text-white py-2 px-4 rounded-lg shadow-md">
+            <h2 className="text-2xl font-bold text-center">
+              Course and Instructor Reviews
+            </h2>
+          </div>
+        </div>
+
+
 
         {/* Course Carousel */}
         <div className="relative mb-8">
           {/* Left Navigation */}
           <button
-            className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-green-500 text-white px-4 py-2 rounded-full shadow-lg hover:bg-green-600"
+            className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-[#EAEFF8] text-brack px-4 py-2 rounded-full shadow-lg hover:bg-green-600"
             onClick={handlePrevSlide}
             disabled={currentSlide === 0}
           >
@@ -123,7 +129,7 @@ const ReviewPage = () => {
 
           {/* Right Navigation */}
           <button
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-green-500 text-white px-4 py-2 rounded-full shadow-lg hover:bg-green-600"
+            className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-[#EAEFF8] text-brack px-4 py-2 rounded-full shadow-lg hover:bg-green-600"
             onClick={handleNextSlide}
             disabled={currentSlide === totalSlides - 1}
           >
@@ -133,10 +139,10 @@ const ReviewPage = () => {
 
         {/* Review Section */}
         {selectedCourseId && (
-          <div className="bg-green-50 p-6 rounded-md">
-            <h3 className="text-lg font-bold text-center mb-4">
-              ประเมินผู้สอนและรายวิชา
-            </h3>
+          <div className="bg-[#EAEFF8] p-6 rounded-md">
+            <h2 className="text-lg font-bold text-center mb-4">
+              Evaluation of teachers and subjects
+            </h2>
 
             <div className="grid grid-cols-2 gap-4 mb-4">
               {ratingCriteria.map((criterion, index) => (
@@ -148,8 +154,8 @@ const ReviewPage = () => {
                         key={rating}
                         onClick={() => handleRating(selectedCourseId, index, rating)}
                         className={`w-8 h-8 rounded-full flex items-center justify-center ${ratings[selectedCourseId]?.[index] === rating
-                            ? "bg-green-600 text-white"
-                            : "bg-gray-300 text-gray-600"
+                          ? "bg-green-600 text-white"
+                          : "bg-gray-300 text-gray-600"
                           }`}
                       >
                         {rating}
@@ -173,10 +179,10 @@ const ReviewPage = () => {
 
             <div className="flex justify-end space-x-4 mt-6">
               <button className="bg-red-500 text-white px-6 py-2 rounded-md hover:bg-red-600">
-                ยกเลิก
+                Cancel
               </button>
               <button className="bg-green-500 text-white px-6 py-2 rounded-md hover:bg-green-600">
-                ยืนยัน
+                Confirm
               </button>
             </div>
           </div>
