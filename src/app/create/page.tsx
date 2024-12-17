@@ -76,7 +76,7 @@ const CreatePage = () => {
           <h1 className="text-3xl font-bold">Create Course</h1>
         </div>
 
-        <div className="max-w-full mx-auto bg-white shadow-lg rounded-lg p-6 flex flex-col md:flex-row">
+        <div className="max-w-full mx-auto bg-[#EAEFF8] shadow-lg rounded-lg p-6 flex flex-col md:flex-row">
           {/* Image Section */}
           <div className="w-[350px] h-[220px] bg-gray-200 rounded-md shadow-lg mb-4 md:mb-0 md:ml-6 order-1 md:order-2">
             {imageUrl ? (
@@ -98,12 +98,12 @@ const CreatePage = () => {
             {/* Image URL */}
             <label className="text-gray-700">Image URL</label>
             <input
-              type="text"
-              className="w-full py-2 px-4 border rounded focus:ring-2 focus:ring-blue-400"
-              placeholder="Image URL"
-              name="img"
-              onChange={(e) => setImageUrl(e.target.value)}
-            />
+  type="text"
+  className="w-full py-2 px-4 border rounded-xl bg-white focus:bg-white focus:outline-none focus:ring-0"
+  placeholder="Image URL"
+  name="img"
+  onChange={(e) => setImageUrl(e.target.value)}
+/>
 
 
             {/* Course Name */}
@@ -111,7 +111,7 @@ const CreatePage = () => {
               <label className="text-gray-700">Course Name</label>
               <input
                 type="text"
-                className="w-full py-2 px-4 border rounded focus:ring-2 focus:ring-blue-400"
+                className="w-full py-2 px-4 border rounded-xl focus:ring-2 focus:ring-blue-400"
                 placeholder="Course name"
                 name="courseName"
                 required
@@ -127,12 +127,12 @@ const CreatePage = () => {
                   value={selectedSubject}
                   onChange={handleSubjectChange}
                   placeholder="subject . . ."
-                  className="w-full py-2 px-4 border rounded focus:ring-2 focus:ring-blue-400"
+                  className="w-full py-2 px-4 border rounded-xl focus:ring-2 focus:ring-blue-400"
                   required
                   onFocus={() => setIsDropdownOpen(true)}
                 />
                 {isDropdownOpen && filteredOptions.length > 0 && (
-                  <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded mt-1 max-h-60 overflow-auto shadow-lg">
+                  <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded-xl mt-1 max-h-60 overflow-auto shadow-lg">
                     {filteredOptions.map(option => (
                       <li
                         key={option.value}
@@ -174,7 +174,7 @@ const CreatePage = () => {
               <label className="text-gray-700">Teacher Name</label>
               <input
                 type="text"
-                className="w-full py-2 px-4 border rounded focus:ring-2 focus:ring-blue-400"
+                className="w-full py-2 px-4 border rounded-xl focus:ring-2 focus:ring-blue-400"
                 placeholder="Teacher Name"
                 name="teacher"
                 required
@@ -185,7 +185,7 @@ const CreatePage = () => {
             <div className="space-y-2">
               <label className="text-gray-700">Course Detail</label>
               <textarea
-                className="w-full h-32 py-2 px-4 border rounded focus:ring-2 focus:ring-blue-400"
+                className="w-full h-32 py-2 px-4 border rounded-xl focus:ring-2 focus:ring-blue-400"
                 placeholder="Course detail"
                 name="detail"
                 required
@@ -198,7 +198,7 @@ const CreatePage = () => {
                 <label className="text-gray-700">Hours Content</label>
                 <input
                   type="number"
-                  className="w-full py-2 px-4 border rounded focus:ring-2 focus:ring-blue-400"
+                  className="w-full py-2 px-4 border rounded-xl focus:ring-2 focus:ring-blue-400"
                   placeholder="Hours content"
                   name="hour"
                   min="1"
@@ -209,7 +209,7 @@ const CreatePage = () => {
                 <label className="text-gray-700">Total Members</label>
                 <input
                   type="number"
-                  className="w-full py-2 px-4 border rounded focus:ring-2 focus:ring-blue-400"
+                  className="w-full py-2 px-4 border rounded-xl focus:ring-2 focus:ring-blue-400"
                   placeholder="Total members"
                   name="totalMember"
                   min="1"
@@ -223,7 +223,7 @@ const CreatePage = () => {
               <label className="text-gray-700">Price per Person</label>
               <input
                 type="number"
-                className="w-full py-2 px-4 border rounded focus:ring-2 focus:ring-blue-400"
+                className="w-full py-2 px-4 border rounded-xl focus:ring-2 focus:ring-blue-400"
                 placeholder="Price per person"
                 name="price"
                 min="0"
@@ -243,7 +243,7 @@ const CreatePage = () => {
                     className="mr-2"
                     required
                   />
-                  <span className="bg-blue-500 text-white px-4 py-2 rounded shadow">
+                  <span className="bg-blue-500 text-white px-4 py-2 rounded-xl shadow">
                     Online
                   </span>
                 </label>
@@ -254,7 +254,7 @@ const CreatePage = () => {
                     value="onsite"
                     className="mr-2"
                   />
-                  <span className="bg-yellow-500 text-white px-4 py-2 rounded shadow">
+                  <span className="bg-yellow-500 text-white px-4 py-2 rounded-xl shadow">
                     Onsite
                   </span>
                 </label>
