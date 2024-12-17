@@ -63,10 +63,10 @@ const Navbar = () => {
                 Profile
               </Link>
               <Link
-                href="/favorite"
+                href="/review"
                 className="w-full text-center text-lg hover:bg-white hover:text-black py-2 rounded transition duration-300"
               >
-                Favorite
+                Review
               </Link>
               <Link
                 href="/manual"
