@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { signup } from "../../../serveraction/serverActions";
+import { valid } from "../../../serveraction/serverActions";
 import { useFormStatus } from "react-dom";
 import { useActionState, useState } from "react";
-import { ToastContainer, toast, Bounce } from "react-toastify";
+import { ToastContainer, toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function SignupButton() {
@@ -18,69 +18,53 @@ function SignupButton() {
 }
 
 const SignupPage = () => {
-  const [submit, actionSubmit] = useActionState(signup, undefined);
-  const [message, setMessage] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [formData, setFormData] = useState({
+    userName: "",
+    fullName: "",
+    email: "",
+    phone: "",
+    password: "",
+    confirmPassword: "",
+    role: "",
+  });
+  const [submit, actionSubmit] = useActionState(valid, undefined);
+ 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
   const handleSubmit = async (event: React.FormEvent) => {
-    setMessage(null); // Reset message state before submission
-    setError(null); // Reset error state before submission
-
-    try {
-      const formElement = event.currentTarget as HTMLFormElement;
-      const formData = new FormData(formElement);
-      const formDataObject = Object.fromEntries(formData.entries());
-
-      const res = await fetch("/api/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formDataObject),
-      });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        setMessage(data.message || "User registered successfully");
-        toast.success(data.message || "User registered successfully", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          transition: Bounce,
+  
+    
+    if (submit?.errors) {
+     
+      toast.error("Please fix the errors in the form before submitting.");
+      return;
+    } else {
+      try {
+        const formElement = event.currentTarget as HTMLFormElement;
+        const formData = new FormData(formElement);
+        const formDataObject = Object.fromEntries(formData.entries());
+        
+        const res = await fetch("/api/signup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formDataObject),
         });
-      } else {
-        setError(data.error || "Failed to create user");
-        toast.error(data.error || "Failed to create user", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          transition: Bounce,
-        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          toast.success(data.message);
+        } else {
+          toast.error(data.error);
+        }
+      } catch (error) {
+        toast.error("An error occurred while submitting the form.");
       }
-    } catch (error) {
-      setError("An error occurred while submitting the form.");
-      toast.error("An error occurred while submitting the form.", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
     }
   };
 
@@ -93,8 +77,8 @@ const SignupPage = () => {
         </div>
         <hr />
         <form
-          action={actionSubmit}
           onSubmit={handleSubmit}
+          action={actionSubmit}
           className="text-xl grid grid-cols-1 sm:grid-cols-2 items-center justify-center gap-x-4 gap-y-3"
         >
           <div className="grid min-w-[300px]">
@@ -105,6 +89,8 @@ const SignupPage = () => {
               name="userName"
               className="border"
               required
+              value={formData.userName}
+              onChange={handleChange}
             />
           </div>
           <div className="grid">
@@ -115,6 +101,8 @@ const SignupPage = () => {
               name="fullName"
               className="border"
               required
+              value={formData.fullName}
+              onChange={handleChange}
             />
           </div>
 
@@ -126,6 +114,8 @@ const SignupPage = () => {
               name="email"
               className="border"
               required
+              value={formData.email}
+              onChange={handleChange}
             />
           </div>
           <div className="grid">
@@ -137,6 +127,8 @@ const SignupPage = () => {
               name="phone"
               className="border"
               required
+              value={formData.phone}
+              onChange={handleChange}
             />
           </div>
           <div className="grid">
@@ -147,6 +139,8 @@ const SignupPage = () => {
               name="password"
               className="border"
               required
+              value={formData.password}
+              onChange={handleChange}
             />
           </div>
           <div className="grid">
@@ -157,6 +151,8 @@ const SignupPage = () => {
               name="confirmPassword"
               className="border"
               required
+              value={formData.confirmPassword}
+              onChange={handleChange}
             />
           </div>
           <div className="flex col-span-1 sm:col-span-2">
@@ -170,6 +166,8 @@ const SignupPage = () => {
                 value="Student"
                 className="mr-4"
                 required
+                checked={formData.role === "Student"}
+                onChange={handleChange}
               />
             </div>
             <label className="option mr-2">Teacher</label>
@@ -178,6 +176,9 @@ const SignupPage = () => {
               id="option"
               name="role"
               value="Teacher"
+              checked={formData.role === "Teacher"}
+              onChange={handleChange}
+              // required
             />
           </div>
           <div></div>
@@ -187,9 +188,9 @@ const SignupPage = () => {
           Already have an account?
           <Link href="/login"> Login</Link>
         </div>
-        {submit?.errors?.name && (
+        {submit?.errors?.userName && (
           <li className="col-span-1 sm:col-span-2 text-red-500 text-lg">
-            {submit.errors.name}
+            {submit.errors.userName}
           </li>
         )}
         {submit?.errors?.fullName && (
@@ -225,7 +226,14 @@ const SignupPage = () => {
             {submit.errors.confirmPassword}
           </li>
         )}
-        <ToastContainer />
+        <ToastContainer 
+        position= "top-right"
+        autoClose= {5000}
+        hideProgressBar= {false}
+        closeOnClick= {true}
+        pauseOnHover= {true}
+        draggable= {true}
+        theme= "light"/>
       </div>
     </div>
   );

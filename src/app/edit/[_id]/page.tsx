@@ -1,47 +1,87 @@
 "use client";
 
-// import { useActionState, useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { postCourse } from "@/serveraction/serverActions";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { getCourseById, updateCourse } from "@/serveraction/serverActions";
 
-const CreatePage = () => {
+interface Params {
+  _id: string;
+}
+
+
+
+const EditCoursePage = ({ params }: { params: Promise<Params> }) => {
+  const [unwrappedParams, setUnwrappedParams] = useState<Params | null>(null);
+  const [courseData, setCourseData] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+
+  useEffect(() => {
+    params.then((resolvedParams) => {
+      setUnwrappedParams(resolvedParams);
+    });
+  }, [params]);
+
+  useEffect(() => {
+    async function fetchCourse() {
+      if (unwrappedParams) {
+        const initialCourse = await getCourseById(unwrappedParams._id);
+        if (initialCourse) {
+          setCourseData(initialCourse.course);
+        }
+      }
+    }
+    fetchCourse();
+  }, [unwrappedParams]);
+
+  const router = useRouter();
+
+  if (!unwrappedParams || !courseData) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="mx-auto py-10 px-5">
       <div className="flex items-center justify-center w-[260px] h-[70px] border-4 border-blue-400 bg-blue-400 p-6">
-        <h3 className="text-3xl font-bold">Create Course</h3>
+        <h3 className="text-3xl font-bold">Edit Course</h3>
       </div>
       <hr className="my-3" />
-      <form action={postCourse} className="grid">
+      <form className="grid" onSubmit={async (e) => {
+          e.preventDefault();
+          const formData = new FormData(e.target as HTMLFormElement);
+          await updateCourse(unwrappedParams._id, formData);
+          router.refresh();
+          router.push("/");
+        }}>
         <div className="flex flex-col border-4 border-blue-100 bg-blue-100 p-6">
-            {imageUrl && (
+          {imageUrl && (
             <img
               src={imageUrl}
               alt="Course Image"
               className="w-[400px] h-auto my-2"
               onError={() => setImageUrl("")}
             />
-            )}
-            <input
+          )}
+          <input
             type="text"
             className="w-[800px] py-2 px-3 rounded text-lg my-2"
-            placeholder="Image URL" // ใส่ URL รูป
+            defaultValue={courseData.img} // ใส่ URL รูป
             name="img"
             onChange={(e) => setImageUrl(e.target.value)}
-            />
-            
-            <input
+          />
+
+          <input
             type="text"
             className="w-[700px] py-2 px-3 rounded text-lg my-2"
             placeholder="Course name" // ชื่อคอร์ส
             name="courseName"
+            defaultValue={courseData.coursename}
             required
           />
           <select
             className="w-[400px] py-2 px-3 rounded text-lg my-2"
             name="subject"
+            defaultValue={courseData.subject}
             required
           >
             <option value="">Select Subject</option>
@@ -55,12 +95,14 @@ const CreatePage = () => {
             placeholder="Teacher Name" // เป็นให้เลือกตามชื่อผู้สอนวิชานั้นๆ
             type="text"
             name="teacher"
+            defaultValue={courseData.teacher}
             required
           />
           <textarea
             className="w-[600px] h-[200px] py-2 px-3 rounded text-lg my-2"
             placeholder="Course detail" // คำอธิบาย
             name="detail"
+            defaultValue={courseData.detail}
             required
           ></textarea>
           <input
@@ -69,6 +111,7 @@ const CreatePage = () => {
             name="hour"
             type="number"
             min="1"
+            defaultValue={courseData.hour}
             required
           />
           <div className="flex space-x-4">
@@ -78,6 +121,7 @@ const CreatePage = () => {
               name="totalMember"
               type="number"
               min="0"
+              defaultValue={courseData.totalmember}
               required
             />
             <input
@@ -86,40 +130,43 @@ const CreatePage = () => {
               name="price"
               type="number"
               min="0"
+              defaultValue={courseData.price}
               required
             />
           </div>
-          <div className="flex space-x-4">
+            <div className="flex space-x-4">
             <label className="flex items-center">
               <input
-                type="radio"
-                name="courseType"
-                value="online"
-                className="mr-2"
-                required
+              type="radio"
+              name="courseType"
+              value="online"
+              className="mr-2"
+              required
+              defaultChecked={courseData.coursetype === "online"}
               />
               <span className="w-[100px] bg-red-500 text-white border py-2 px-3 rounded text-lg my-2 text-center">
-                Online
+              Online
               </span>
             </label>
             <label className="flex items-center">
               <input
-                type="radio"
-                name="courseType"
-                value="onsite"
-                className="mr-2"
+              type="radio"
+              name="courseType"
+              value="onsite"
+              className="mr-2"
+              defaultChecked={courseData.coursetype === "onsite"}
               />
               <span className="w-[100px] bg-yellow-500 text-white border py-2 px-3 rounded text-lg my-2 text-center">
-                Onsite
+              Onsite
               </span>
             </label>
-          </div>
+            </div>
           <div className="flex justify-end space-x-4">
             <button
               type="submit"
               className="w-[200px] bg-green-500 text-white border py-2 px-3 rounded text-lg my-2"
             >
-              Create Course
+              Edit Course
             </button>
             <Link
               href="/"
@@ -133,4 +180,5 @@ const CreatePage = () => {
     </div>
   );
 };
-export default CreatePage;
+
+export default EditCoursePage;

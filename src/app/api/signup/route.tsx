@@ -4,7 +4,6 @@ import { User } from "@/models/models";
 import bcrypt from "bcrypt";
 
 export const POST = async (req: Request) => {
-
   try {
     const { userName, fullName, email, phone, password, role } =
       await req.json();
@@ -30,7 +29,7 @@ export const POST = async (req: Request) => {
     if (error.code === 11000) {
       // Handling duplicate key errors
       const field = Object.keys(error.keyValue)[0];
-      console.log(`${field} already exists`)
+      console.log(`${field} already exists`);
       return NextResponse.json(
         { error: `${field} already exists` },
         { status: 409 }
