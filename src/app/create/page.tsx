@@ -96,6 +96,7 @@ const CreatePage = () => {
           {/* Form Section */}
           <form action={postCourse} className="flex-1 space-y-4 relative order-2 md:order-1">
             {/* Image URL */}
+            <label className="text-gray-700">Image URL</label>
             <input
               type="text"
               className="w-full py-2 px-4 border rounded focus:ring-2 focus:ring-blue-400"
@@ -104,40 +105,49 @@ const CreatePage = () => {
               onChange={(e) => setImageUrl(e.target.value)}
             />
 
-            {/* Course Name */}
-            <input
-              type="text"
-              className="w-full py-2 px-4 border rounded focus:ring-2 focus:ring-blue-400"
-              placeholder="Course name"
-              name="courseName"
-              required
-            />
 
-            {/* Subject Dropdown */}
-            <div className="relative" ref={dropdownRef}>
+            {/* Course Name */}
+            <div className="space-y-2">
+              <label className="text-gray-700">Course Name</label>
               <input
                 type="text"
-                value={selectedSubject}
-                onChange={handleSubjectChange}
-                placeholder="subject . . ."
                 className="w-full py-2 px-4 border rounded focus:ring-2 focus:ring-blue-400"
+                placeholder="Course name"
+                name="courseName"
                 required
-                onFocus={() => setIsDropdownOpen(true)}
               />
-              {isDropdownOpen && filteredOptions.length > 0 && (
-                <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded mt-1 max-h-60 overflow-auto shadow-lg">
-                  {filteredOptions.map(option => (
-                    <li
-                      key={option.value}
-                      onClick={() => handleOptionClick(option.label)}
-                      className="px-4 py-2 hover:bg-blue-100 cursor-pointer"
-                    >
-                      {option.label}
-                    </li>
-                  ))}
-                </ul>
-              )}
             </div>
+
+            {/* Subject Dropdown */}
+            <div className="space-y-2">
+              <label className="text-gray-700">Subject</label>
+              <div className="relative" ref={dropdownRef}>
+                <input
+                  type="text"
+                  value={selectedSubject}
+                  onChange={handleSubjectChange}
+                  placeholder="subject . . ."
+                  className="w-full py-2 px-4 border rounded focus:ring-2 focus:ring-blue-400"
+                  required
+                  onFocus={() => setIsDropdownOpen(true)}
+                />
+                {isDropdownOpen && filteredOptions.length > 0 && (
+                  <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded mt-1 max-h-60 overflow-auto shadow-lg">
+                    {filteredOptions.map(option => (
+                      <li
+                        key={option.value}
+                        onClick={() => handleOptionClick(option.label)}
+                        className="px-4 py-2 hover:bg-blue-100 cursor-pointer"
+                      >
+                        {option.label}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </div>
+
+
 
             <style jsx>{`
               ul {
@@ -160,77 +170,95 @@ const CreatePage = () => {
             </style>
 
             {/* Teacher Name */}
-            <input
-              type="text"
-              className="w-full py-2 px-4 border rounded focus:ring-2 focus:ring-blue-400"
-              placeholder="Teacher Name"
-              name="teacher"
-              required
-            />
-
-            {/* Course Details */}
-            <textarea
-              className="w-full h-32 py-2 px-4 border rounded focus:ring-2 focus:ring-blue-400"
-              placeholder="Course detail"
-              name="detail"
-              required
-            ></textarea>
-
-            {/* Hours and Total Members */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <label className="text-gray-700">Teacher Name</label>
               <input
-                type="number"
+                type="text"
                 className="w-full py-2 px-4 border rounded focus:ring-2 focus:ring-blue-400"
-                placeholder="Hours content"
-                name="hour"
-                min="1"
-                required
-              />
-              <input
-                type="number"
-                className="w-full py-2 px-4 border rounded focus:ring-2 focus:ring-blue-400"
-                placeholder="Total members"
-                name="totalMember"
-                min="1"
+                placeholder="Teacher Name"
+                name="teacher"
                 required
               />
             </div>
 
-            {/* Price */}
-            <input
-              type="number"
-              className="w-full py-2 px-4 border rounded focus:ring-2 focus:ring-blue-400"
-              placeholder="Price per person"
-              name="price"
-              min="0"
-              required
-            />
+            {/* Course Details */}
+            <div className="space-y-2">
+              <label className="text-gray-700">Course Detail</label>
+              <textarea
+                className="w-full h-32 py-2 px-4 border rounded focus:ring-2 focus:ring-blue-400"
+                placeholder="Course detail"
+                name="detail"
+                required
+              ></textarea>
+            </div>
 
-            {/* Course Type */}
-            <div className="flex space-x-4">
-              <label className="flex items-center">
+            {/* Hours and Total Members */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label className="text-gray-700">Hours Content</label>
                 <input
-                  type="radio"
-                  name="courseType"
-                  value="online"
-                  className="mr-2"
+                  type="number"
+                  className="w-full py-2 px-4 border rounded focus:ring-2 focus:ring-blue-400"
+                  placeholder="Hours content"
+                  name="hour"
+                  min="1"
                   required
                 />
-                <span className="bg-blue-500 text-white px-4 py-2 rounded shadow">
-                  Online
-                </span>
-              </label>
-              <label className="flex items-center">
+              </div>
+              <div className="space-y-2">
+                <label className="text-gray-700">Total Members</label>
                 <input
-                  type="radio"
-                  name="courseType"
-                  value="onsite"
-                  className="mr-2"
+                  type="number"
+                  className="w-full py-2 px-4 border rounded focus:ring-2 focus:ring-blue-400"
+                  placeholder="Total members"
+                  name="totalMember"
+                  min="1"
+                  required
                 />
-                <span className="bg-yellow-500 text-white px-4 py-2 rounded shadow">
-                  Onsite
-                </span>
-              </label>
+              </div>
+            </div>
+
+            {/* Price */}
+            <div className="space-y-2">
+              <label className="text-gray-700">Price per Person</label>
+              <input
+                type="number"
+                className="w-full py-2 px-4 border rounded focus:ring-2 focus:ring-blue-400"
+                placeholder="Price per person"
+                name="price"
+                min="0"
+                required
+              />
+            </div>
+
+            {/* Course Type */}
+            <div className="space-y-2">
+              <label className="text-gray-700">Course Type</label>
+              <div className="flex space-x-4">
+                <label className="flex items-center">
+                  <input
+                    type="radio"
+                    name="courseType"
+                    value="online"
+                    className="mr-2"
+                    required
+                  />
+                  <span className="bg-blue-500 text-white px-4 py-2 rounded shadow">
+                    Online
+                  </span>
+                </label>
+                <label className="flex items-center">
+                  <input
+                    type="radio"
+                    name="courseType"
+                    value="onsite"
+                    className="mr-2"
+                  />
+                  <span className="bg-yellow-500 text-white px-4 py-2 rounded shadow">
+                    Onsite
+                  </span>
+                </label>
+              </div>
             </div>
 
             {/* Buttons Positioned Bottom-Right */}
