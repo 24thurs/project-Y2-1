@@ -20,12 +20,11 @@ const FavoriteBtn = ({ course_id, cookie }: { course_id: string; cookie: boolean
       });
     }
   };
-
   return (
     <button>
       <a
         onClick={handleFavorite}
-        className="bg-yellow-500 text-white px-12 py-4 rounded hover:bg-green-600 text-xl"
+        className="bg-yellow-500 text-white px-12 py-4 rounded hover:bg-gray-600 text-xl"
       >
         Favorite
       </a>

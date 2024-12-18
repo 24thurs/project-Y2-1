@@ -7,7 +7,6 @@ import { useState, useEffect } from "react";
 import { checkCookie, deleteSession } from "@/serveraction/serverActions";
 import { usePathname, useRouter } from "next/navigation";
 
-
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [cookie, setCookie] = useState(false);
@@ -28,6 +27,7 @@ const Navbar = () => {
   const router = useRouter();
 
   const handleLogout = async () => {
+
     await deleteSession(pathname);
     router.push('/');
     window.location.reload();
@@ -51,7 +51,7 @@ const Navbar = () => {
             height={50}
             className="mr-2"
           />
-          Username
+          Study Finder
               </h2>
               <button
           className=" top-2 right-4 md:hidden bg-[#395886] text-white text-2xl p-4 rounded z-50 "
@@ -178,7 +178,7 @@ const Navbar = () => {
           height={60}
           className="mr-2"
               />
-              Username
+              StudyFinder
             </h2>
             <button
               className="fixed top-8 right-4 md:hidden bg-[#395886] text-white p-2 rounded z-50 "

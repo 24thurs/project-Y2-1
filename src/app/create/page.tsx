@@ -6,9 +6,12 @@ import { useState, useRef, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import { checkCookie } from "@/serveraction/serverActions";
 import HandleUser from "../components/HandleUser";
+import Loading from "../components/Loading";
 
 const CreatePage = () => {
   const [imageUrl, setImageUrl] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [cookie, setCookie] = useState(false);
 
   const subjectOptions = [
     { value: "math", label: "Math" },
@@ -64,14 +67,20 @@ const CreatePage = () => {
     };
   }, []);
 
-  const [cookie, setCookie] = useState(false);
   useEffect(() => {
-    async function getCookie() {
+    async function fetchData() {
       const isCookie = await checkCookie();
       if (isCookie) setCookie(true);
+      setLoading(false);
     }
-    getCookie();
+    fetchData();
   }, []);
+
+  if (loading) {
+    return (
+      <Loading/>
+    );
+  }
 
   if (!cookie) {
     return <HandleUser />;
@@ -92,18 +101,18 @@ const CreatePage = () => {
 
           <div className="max-w-full mx-auto bg-[#EAEFF8] shadow-lg rounded-lg p-6 flex flex-col md:flex-row">
             {/* Image Section */}
-            <div className="w-[550px] h-[420px] bg-gray-200 rounded-md shadow-lg mb-4 md:mb-0 md:ml-6 order-1 md:order-2">
+            <div className="w-full md:w-[550px] h-[220px] md:h-[420px] bg-gray-200 rounded-md shadow-lg mb-4 md:mb-0 md:ml-6 order-1 md:order-2 flex items-center justify-center">
               {imageUrl ? (
-                <img
-                  src={imageUrl}
-                  alt="Course Image"
-                  className="object-cover w-full h-full rounded-md"
-                  onError={() => setImageUrl("")}
-                />
+              <img
+                src={imageUrl}
+                alt="Course Image"
+                className="object-cover w-full h-full rounded-md"
+                onError={() => setImageUrl("")}
+              />
               ) : (
-                <span className="text-gray-500 flex items-center justify-center h-full">
-                  350 x 220
-                </span>
+              <span className="text-gray-500">
+                350 x 220
+              </span>
               )}
             </div>
 
@@ -123,17 +132,7 @@ const CreatePage = () => {
               />
 
               {/* Course Name */}
-              <div className="space-y-2">
-                <label className="text-gray-700">Course Name</label>
-                <input
-                  type="text"
-                  className="w-full py-2 px-4 border rounded-xl focus:ring-2 focus:ring-blue-400"
-                  placeholder="Course name"
-                  name="courseName"
-                  required
-                />
-              </div>
-
+              <div className="space-y-2"></div>
               {/* Subject Dropdown */}
               <div className="space-y-2">
                 <label className="text-gray-700">Subject</label>

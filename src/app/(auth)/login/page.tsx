@@ -5,6 +5,7 @@ import { login } from "@/serveraction/serverActions";
 import { useActionState, useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
   const initState = {
@@ -24,11 +25,18 @@ const LoginPage = () => {
   const [state, formAction] = useActionState(login, initState);
   const [showPassword, setShowPassword] = useState(false);
 
+  const router = useRouter();
+
   useEffect(() => {
-    if (state.message) {
-      toast.error(state.message);
+    if (state.error) {
+      toast.error(state.error);
+    } else if (state.error) {
+      toast.error(state.error);
     } else if (state.message) {
-      toast.error(state.message);
+      toast.success(state.message)
+      setTimeout(() => {
+        router.push("/");
+      }, 1500);
     }
   }, [state]);
 
@@ -42,7 +50,7 @@ const LoginPage = () => {
         <div className="border border-gray-300 bg-blue-100 p-6 rounded-3xl max-w-xl   shadow-lg">
         <div className="flex justify-center mb-4">
             <img src="/image/logo.png" 
-            alt="Iogo" 
+            alt="Logo" 
             className="w-30 h-20 object-cover rounded-full  " />
           </div>
                     
