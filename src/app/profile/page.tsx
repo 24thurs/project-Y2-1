@@ -14,8 +14,10 @@ export function Profile() {
   useEffect(() => {
     async function fetchProfile() {
       const initialProfile = await getProfile();
-      setProfile(initialProfile);
-      setCourseData(initialProfile.course);
+      if (initialProfile) {
+        setProfile(initialProfile);
+        setCourseData(initialProfile.course || []);
+      }
     }
     fetchProfile();
   }, []);
@@ -23,7 +25,7 @@ export function Profile() {
   if (!profile) {
     return ( 
     <div className="flex items-center justify-center h-screen bg-[#EAEFF8] min-h-screen">
-      <div className="bg-gray-300 w-[400px] h-[500px] p-8 rounded-lg shadow-md text-center ">
+      <div className="bg-gray-300 w-full max-w-md p-8 rounded-lg shadow-md text-center">
         <div className="flex justify-center mb-4">
           <Image
             src="/image/icon.png" 
@@ -39,19 +41,24 @@ export function Profile() {
         <p className="text-black mb-6">Please log in before using</p>
 
         <div className="flex justify-center space-x-4 mb-4">
-          <button className="bg-blue-500 text-white w-[100px] h-[40px] text-xl rounded-md hover:bg-blue-600 transition">
-          <Link href="/login" >Login</Link>
-          </button>
-          <button className="bg-blue-400 text-white w-[100px] h-[40px] text-xl rounded-md hover:bg-blue-600 transition">
-          <Link href="/signup" >Sign up</Link>
-          </button>
+          <Link href="/login">
+            <button className="bg-blue-500 text-white w-[100px] h-[40px] text-xl rounded-md hover:bg-blue-600 transition">
+              Login
+            </button>
+          </Link>
+          <Link href="/signup">
+            <button className="bg-blue-400 text-white w-[100px] h-[40px] text-xl rounded-md hover:bg-blue-600 transition">
+              Sign up
+            </button>
+          </Link>
         </div>
-        <button className="bg-gray-400 text-white w-[100px] h-[40px] text-xl rounded-md hover:bg-gray-600 transition">
-          <Link href="/" >Back</Link>
+        <Link href="/">
+          <button className="bg-gray-400 text-white w-[100px] h-[40px] text-xl rounded-md hover:bg-gray-600 transition">
+            Back
           </button>
+        </Link>
       </div>
-    </div>
-  
+      </div>
     )
   }
 
@@ -119,7 +126,7 @@ export function Profile() {
             <p className="text-sm text-gray-500">Location: {val.coursetype}</p>
             <div className="flex justify-between items-center mt-2">
               <p className="text-sm text-gray-500">
-                จำนวนคน: {val.totalmember} คน
+                number of member: {val.totalmember} person
               </p>
               <p className="text-lg text-green-600 font-semibold">
                 {val.price} บาท / คน

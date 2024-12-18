@@ -39,7 +39,7 @@ const LoginPage = () => {
         action={formAction}
         className="py-40 text-xl flex flex-col items-center justify-center gap-y-4"
       >
-        <div className="border border-gray-300 bg-blue-100 p-6 rounded-md max-w-xl   shadow-lg">
+        <div className="border border-gray-300 bg-blue-100 p-6 rounded-3xl max-w-xl   shadow-lg">
         <div className="flex justify-center mb-4">
             <img src="/image/logo.png" 
             alt="Iogo" 

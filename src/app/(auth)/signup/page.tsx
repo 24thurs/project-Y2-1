@@ -74,7 +74,7 @@ const SignupPage = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 text-xl">
-       <div className="border border-gray-300 bg-blue-100 p-6 rounded-md max-w-2xl w-full shadow-lg">
+      <div className="border border-gray-300 bg-blue-100 p-6 rounded-3xl max-w-2xl w-full shadow-lg">
          <div className="flex justify-center mb-4">
             <img src="/image/logo.png" 
             alt="Iogo" 

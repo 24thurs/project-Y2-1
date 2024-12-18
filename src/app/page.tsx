@@ -39,11 +39,11 @@ function Home() {
   const toggleDropdown = () => setIsOpen(!isOpen);
 
   const handleFilter = () => {
-    const finalMinPrice = minPrice || "ไม่จำกัด";
-    const finalMaxPrice = maxPrice || "ไม่จำกัด";
+    const finalMinPrice = minPrice || "unlimit";
+    const finalMaxPrice = maxPrice || "unlimit";
     console.log("price:", finalMinPrice, "-", finalMaxPrice);
-    console.log("status:", status || "ไม่ระบุ");
-    console.log("sortorder:", sortOrder || "ไม่ระบุ");
+    console.log("status:", status || "undefine");
+    console.log("sortorder:", sortOrder || "undefine");
     setIsOpen(false);
   };
 
@@ -71,11 +71,42 @@ function Home() {
     }
   };
 
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [coursesPerSlide, setCoursesPerSlide] = useState(3); // Default
+
+  const subjects = [
+    { id: 1, title: "English", image: "/image/English.png" },
+    { id: 2, title: "Math", image: "/image/Math.png" },
+    { id: 3, title: "Computer", image: "/image/Computer.png" },
+    { id: 4, title: "History", image: "/image/History.png" },
+    { id: 5, title: "Science", image: "/image/Science.png" },
+  ];
+
+  // Calculate the number of courses per slide based on screen size
   useEffect(() => {
-    if (searchTerm.trim() === "") {
-      handleSearch();
-    }
-  }, [searchTerm]);
+    const updateCoursesPerSlide = () => {
+      const width = window.innerWidth;
+      if (width >= 1280) setCoursesPerSlide(5); // Large screen
+      else if (width >= 1100) setCoursesPerSlide(4); // Medium-large screen
+      else if (width >= 768) setCoursesPerSlide(3); // Medium screen
+      else setCoursesPerSlide(2); // Mobile
+    };
+
+    updateCoursesPerSlide();
+    window.addEventListener("resize", updateCoursesPerSlide);
+
+    return () => window.removeEventListener("resize", updateCoursesPerSlide);
+  }, []);
+
+  const totalSlides = Math.ceil(subjects.length / coursesPerSlide);
+
+  const handleNextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1 < totalSlides ? prev + 1 : prev));
+  };
+
+  const handlePrevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 >= 0 ? prev - 1 : prev));
+  };
 
   return (
     <div style={{ backgroundColor: "#EAEFF8", minHeight: "100vh" }}>
@@ -85,26 +116,28 @@ function Home() {
         </div>
         <main className="container mx-auto my-6 px-4">
           <div className="flex justify-center items-center">
-            <input
-              type="text"
-              placeholder="ค้นหา..."
-              className="w-full max-w-xl p-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            {searchTerm && (
-              <button
-                className="bg-red-500 text-white px-4 py-2 rounded-r-lg hover:bg-red-600 transition duration-300"
-                onClick={() => setSearchTerm("")}
-              >
-                Clear
-              </button>
-            )}
+            <div className="bg-white rounded-lg shadow-md p-4 relative w-full max-w-lg">
+              <input
+                type="text"
+                placeholder="ค้นหา..."
+                className="w-full border p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              {searchTerm && (
+                <button
+                  className="absolute inset-y-0 right-5 pr-3 flex items-center text-sm leading-5"
+                  onClick={() => setSearchTerm("")}
+                >
+                  ✕
+                </button>
+              )}
+            </div>
             <button
               className="bg-[#6699FF] text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition duration-300 ml-2"
               onClick={handleSearch}
             >
-              ค้นหา
+              search
             </button>
           </div>
 
@@ -115,157 +148,161 @@ function Home() {
               </button>
             </div>
           </div>
-          <div className="flex justify-center gap-5 flex-wrap max-w-screen-md mx-auto">
-              <button className="bg-[#83AEEC] hover:bg-gray-300 text-gray-800 font-bold py-6 px-4 rounded-lg transition duration-300 ease-in-out">
-                  <div className="flex flex-col items-center">
-                     <img 
-                     src="/image/English.png"
-                     alt="Englsih" 
-                     className="w-20" />
-                     <p className="text-lg mt-2">English</p>
-                  </div>
+          {/* Subject Carousel */}
+          <div className="relative mb-8 w-full max-w-4xl mx-auto">
+            {/* Left Navigation */}
+            {currentSlide > 0 && (
+              <button
+                className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-[#EAEFF8] text-black px-4 py-2 rounded-full shadow-lg hover:bg-green-600"
+                onClick={handlePrevSlide}
+              >
+                ←
               </button>
-              <button className="bg-[#83AEEC] hover:bg-gray-300 text-gray-800 font-bold py-6 px-4 rounded-lg transition duration-300 ease-in-out">
-                  <div className="flex flex-col items-center">
-                  <img 
-                     src="/image/Math.png"
-                     alt="Math" 
-                     className="w-20" />
-                     <p className="text-lg mt-2">Math</p>
-                  </div>
+            )}
+
+            <div className="flex overflow-hidden space-x-4 mx-12 px-5 py-4 justify-center">
+              {subjects
+                .slice(
+                  currentSlide * coursesPerSlide,
+                  (currentSlide + 1) * coursesPerSlide
+                )
+                .map((subject) => (
+                  <button
+                    key={subject.id}
+                    className="bg-[#83AEEC] hover:bg-gray-300 text-gray-800 font-bold py-6 px-4 rounded-lg transition duration-300 ease-in-out w-40 h-40"
+                  >
+                    <div className="flex flex-col items-center justify-center h-full">
+                      <img
+                        src={subject.image}
+                        alt={subject.title}
+                        className="w-20"
+                      />
+                      <p className="text-lg mt-2">{subject.title}</p>
+                    </div>
+                  </button>
+                ))}
+            </div>
+
+            {/* Right Navigation */}
+            {currentSlide < totalSlides - 1 && (
+              <button
+                className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-[#EAEFF8] text-black px-4 py-2 rounded-full shadow-lg hover:bg-green-600"
+                onClick={handleNextSlide}
+              >
+                →
               </button>
-              <button className="bg-[#83AEEC] hover:bg-gray-300 text-gray-800 font-bold py-6 px-4 rounded-lg transition duration-300 ease-in-out">
-                  <div className="flex flex-col items-center">
-                  <img 
-                     src="/image/Computer.png"
-                     alt="Computer" 
-                     className="w-20" />
-                     <p className="text-lg mt-2">Computer</p>
-                  </div>
-              </button>
-              <button className="bg-[#83AEEC] hover:bg-gray-300 text-gray-800 font-bold py-6 px-4 rounded-lg transition duration-300 ease-in-out">
-                  <div className="flex flex-col items-center">
-                  <img 
-                     src="/image/History.png"
-                     alt="History" 
-                     className="w-20" />
-                     <p className="text-lg mt-2">History</p>
-                  </div>
-              </button>
-              <button className="bg-[#83AEEC] hover:bg-gray-300 text-gray-800 font-bold py-6 px-4 rounded-lg transition duration-300 ease-in-out">
-                  <div className="flex flex-col items-center">
-                  <img 
-                     src="/image/Science.png"
-                     alt="Science" 
-                     className="w-20" />
-                     <p className="text-lg mt-2">Science</p>
-                  </div>
-              </button>
-              </div>
+            )}
+          </div>
 
           <hr className="my-3" />
           <button className="bg-[#6699FF] text-xl p-3 text-white font-bold rounded-full">
             Class Subject
           </button>
-          <div className="flex justify-end items-center my-8 space-x-4  ">
+          <div className="flex justify-end items-center my-8 space-x-4">
             <button className="bg-green-500 text-white px-4 py-2 rounded-md text-lg hover:bg-green-600">
               <Link href="/create">Create Course</Link>
             </button>
             <div className="relative">
-        <button
-            onClick={toggleDropdown}
-            className="flex items-center bg-gray-200 px-4 py-2 rounded-lg hover:bg-gray-300 z-20"
-        >
-            <span>SearchOrder</span>
-          <svg
-            className="w-5 h-5 ml-2"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-          d="M19 9l-7 7-7-7"
-        ></path>
-        </svg>
-        </button>
-       {isOpen && (
-      <div className="absolute right-0 top-14 w-64 bg-white border border-gray-200 rounded-lg shadow-lg p-4 z-10">
-        <div className="mb-4">
-          <label className="block font-semibold mb-2">Price</label>
-            <div className="flex items-center space-x-2">
-              <input
-                type="number"
-                value={minPrice}
-                onChange={(e) => setMinPrice(e.target.value)}
-                className="w-1/2 p-1 border rounded"
-                placeholder="Min"
-              />
-            <span>-</span>
-              <input
-                type="number"
-                value={maxPrice}
-                onChange={(e) => setMaxPrice(e.target.value)}
-                className="w-1/2 p-1 border rounded"
-                placeholder="Max"
-              />
+              <button
+                onClick={toggleDropdown}
+                className="flex items-center bg-gray-200 px-4 py-2 rounded-lg hover:bg-gray-300 z-20"
+              >
+                <span className="text-xl">Filter</span>
+                <svg
+                  className="w-5 h-5 ml-2"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M19 9l-7 7-7-7"
+                  ></path>
+                </svg>
+              </button>
+              {isOpen && (
+                <div className="absolute right-0 top-14 w-64 bg-white border border-gray-200 rounded-lg shadow-lg p-4 z-10">
+                  <div className="mb-4">
+                    <label className="block font-semibold mb-2">Price</label>
+                    <div className="flex items-center space-x-2">
+                      <input
+                        type="number"
+                        value={minPrice}
+                        onChange={(e) => setMinPrice(e.target.value)}
+                        className="w-1/2 p-1 border rounded"
+                        placeholder="Min"
+                      />
+                      <span>-</span>
+                      <input
+                        type="number"
+                        value={maxPrice}
+                        onChange={(e) => setMaxPrice(e.target.value)}
+                        className="w-1/2 p-1 border rounded"
+                        placeholder="Max"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="mb-4">
+                    <label className="block font-semibold mb-2">Status</label>
+                    <label className="flex items-center space-x-2">
+                      <input
+                        type="checkbox"
+                        checked={status === "Full"}
+                        onChange={() =>
+                          setStatus(status === "Full" ? "" : "Full")
+                        }
+                      />
+                      <span>Full</span>
+                    </label>
+                    <label className="flex items-center space-x-2">
+                      <input
+                        type="checkbox"
+                        checked={status === "available"}
+                        onChange={() =>
+                          setStatus(status === "available" ? "" : "available")
+                        }
+                      />
+                      <span>Available</span>
+                    </label>
+                  </div>
+
+                  <div className="mb-4">
+                    <label className="block font-semibold mb-2">
+                      SortOrder
+                    </label>
+                    <label className="flex items-center space-x-2">
+                      <input
+                        type="radio"
+                        name="sort"
+                        checked={sortOrder === "low-to-high"}
+                        onChange={() => setSortOrder("low-to-high")}
+                      />
+                      <span>Price of Course Min - Max</span>
+                    </label>
+                    <label className="flex items-center space-x-2">
+                      <input
+                        type="radio"
+                        name="sort"
+                        checked={sortOrder === "high-to-low"}
+                        onChange={() => setSortOrder("high-to-low")}
+                      />
+                      <span>Price of Course Max - Min</span>
+                    </label>
+                  </div>
+
+                  <button
+                    onClick={handleFilter}
+                    className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+                  >
+                    Summit
+                  </button>
+                </div>
+              )}
             </div>
-        </div>
-
-        <div className="mb-4">
-          <label className="block font-semibold mb-2">Status</label>
-            <label className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                checked={status === "Full"}
-                onChange={() => setStatus(status === "Full" ? "" : "Full")}
-              />
-                <span>Full</span>
-          </label>
-            <label className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                checked={status === "available"}
-                onChange={() => setStatus(status === "available" ? "" : "available")}
-              />
-            <span>Available</span>
-            </label>
-        </div>
-
-        <div className="mb-4">
-          <label className="block font-semibold mb-2">SortOrder</label>
-          <label className="flex items-center space-x-2">
-            <input
-              type="radio"
-              name="sort"
-              checked={sortOrder === "low-to-high"}
-              onChange={() => setSortOrder("low-to-high")}
-            />
-            <span>Price of Course Min - Max</span>
-          </label>
-          <label className="flex items-center space-x-2">
-            <input
-              type="radio"
-              name="sort"
-              checked={sortOrder === "high-to-low"}
-              onChange={() => setSortOrder("high-to-low")}
-            />
-            <span>Price of Course Max - Min</span>
-          </label>
-        </div>
-
-        <button
-          onClick={handleFilter}
-          className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
-        >
-          Summit
-        </button>
-      </div>
-      )}
-      </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
