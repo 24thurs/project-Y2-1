@@ -4,6 +4,9 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { getCourseById } from "@/serveraction/serverActions";
+import Navbar from "../../components/Navbar";
+import EnrollBtn from "@/app/components/EnrollBtn";
+import FavoriteBtn from "@/app/components/FavoriteBtn";
 
 interface Params {
   _id: string;
@@ -11,8 +14,7 @@ interface Params {
 
 const CourseDetailPage = ({ params }: { params: Promise<Params> }) => {
   const [unwrappedParams, setUnwrappedParams] = useState<Params | null>(null);
-  const [courseData, setCourseData] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
+  const [courseData, setCourseData] =useState<{ _id: string; img: string; coursename: string; teacher: string; subject: string; coursetype: string; totalmember: number; price: number; }[]>([]);
 
   useEffect(() => {
     params.then((resolvedParams) => {
@@ -36,10 +38,10 @@ const CourseDetailPage = ({ params }: { params: Promise<Params> }) => {
 
   if (!unwrappedParams || !courseData) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="flex flex-col items-center">
+      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <div className="text-center">
           <svg
-            className="animate-spin h-10 w-10 text-blue-500 mb-4"
+            className="animate-spin h-10 w-10 text-blue-500 mx-auto mb-4"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -58,100 +60,119 @@ const CourseDetailPage = ({ params }: { params: Promise<Params> }) => {
               d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
             ></path>
           </svg>
-          <p className="text-lg text-gray-700">Loading course details...</p>
+          <h2 className="text-2xl font-semibold text-gray-700">Loading...</h2>
+          <p className="text-gray-500">
+            Please wait while we fetch the course details.
+          </p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="mx-auto py-10 px-5">
-      <div className="flex items-center justify-center w-[260px] h-[70px] border-4 border-blue-400 bg-blue-400 p-6">
-        <h3 className="text-3xl font-bold">Course Detail</h3>
+    <div className="min-h-screen bg-gray-100 flex flex-col md:flex-row">
+      {/* Sidebar */}
+      <div className="md:mr-4">
+        <Navbar />
       </div>
-      <hr className="my-3" />
-      <div className="grid"></div>
 
-      <div
-        key={courseData._id}
-        className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transform transition-transform duration-300 hover:scale-105 hover:shadow-lg"
-      >
-        <img
-          className="w-full h-48 object-cover"
-          src={courseData.img}
-          width={100}
-          height={100}
-          alt={courseData.coursename}
-        />
-        <div className="p-4">
-          <h3 className="text-xl font-bold text-gray-800">{courseData.coursename}</h3>
-          <div className="flex justify-2 items-center text-m space-x-2">
-            <p className="text-sm text-gray-500">Teacher: {courseData.teacher}</p>
+      {/* Main Content */}
+      <div className="flex-1 p-6">
+        {/* Title */}
+        <div className="bg-blue-500 text-white py-2 px-4 rounded-lg shadow-md inline-block mb-6">
+          <h1 className="text-3xl font-bold">Course Detail</h1>
+        </div>
+        <div className="max-w-full mx-auto bg-[#EAEFF8] shadow-lg rounded-lg p-6 flex flex-col md:flex-row md:flex-row-reverse">
+          {/* Image Section */}
+          <div className="w-[350px] h-[220px] bg-gray-200 rounded-md shadow-lg md:ml-6 mb-4 md:mb-0">
+            {courseData.img ? (
+              <img
+                src={courseData.img}
+                alt="Course Image"
+                className="object-cover w-full h-full rounded-md"
+              />
+            ) : (
+              <span className="text-gray-500 flex items-center justify-center h-full">
+                350 x 220
+              </span>
+            )}
           </div>
-          <p className="text-sm text-gray-500">Subject: {courseData.subject}</p>
-          <p className="text-sm text-gray-500">Location: {courseData.coursetype}</p>
-          <div className="flex justify-between items-center mt-1">
-            <p className="text-sm text-gray-500">
-              จำนวนคน: {courseData.totalmember} คน
-            </p>
-            <p className="text-lg text-green-600 font-semibold">
-              {courseData.price} บาท / คน
-            </p>
+
+          {/* Details Section */}
+          <div className="flex-1 space-y-4">
+            {/* Course Name */}
+            <div className="bg-white rounded-xl p-4">
+              <label className="text-gray-700 font-semibold">Course Name</label>
+              <p className="text-lg">{courseData.coursename}</p>
+            </div>
+
+            {/* Subject */}
+            <div className="bg-white rounded-xl p-4">
+              <label className="text-gray-700 font-semibold">Subject</label>
+              <p className="text-lg">{courseData.subject}</p>
+            </div>
+
+            {/* Teacher Name */}
+            <div className="bg-white rounded-xl p-4">
+              <label className="text-gray-700 font-semibold">
+                Teacher Name
+              </label>
+              <p className="text-lg">{courseData.teacher}</p>
+            </div>
+
+            {/* Course Detail */}
+            <div className="bg-white rounded-xl p-4">
+              <label className="text-gray-700 font-semibold">
+                Course Detail
+              </label>
+              <p className="text-lg">{courseData.detail}</p>
+            </div>
+
+            {/* Hours Content and Total Members */}
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+              <div className="bg-white rounded-xl p-4">
+                <label className="text-gray-700 font-semibold">
+                  Hours Content
+                </label>
+                <p className="text-lg">{courseData.hour}</p>
+              </div>
+              <div className="bg-white rounded-xl p-4">
+                <label className="text-gray-700 font-semibold">
+                  Total Members
+                </label>
+                <p className="text-lg">{courseData.totalmember}</p>
+              </div>
+            </div>
+
+            {/* Price per Person */}
+            <div className="bg-white rounded-xl p-4">
+              <label className="text-gray-700 font-semibold">
+                Price per Person
+              </label>
+              <p className="text-lg">{courseData.price}</p>
+            </div>
+
+            {/* Course Type */}
+            <div className="bg-white rounded-xl p-4">
+              <label className="text-gray-700 font-semibold">Course Type</label>
+              <p className="text-lg">{courseData.coursetype}</p>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="flex flex-col border-4 border-blue-100 bg-blue-100 p-6">
-        <div className="w-[700px] py-2 px-3 rounded text-lg my-2">
-          {courseData.coursename}
-        </div>
-        <div className="w-[400px] py-2 px-3 rounded text-lg my-2">
-          {courseData.subject}
-        </div>
-        <div className="w-[600px] py-2 px-3 rounded text-lg my-2">
-          {courseData.teacher}
-        </div>
-        <div className="w-[600px] h-[200px] py-2 px-3 rounded text-lg my-2">
-          {courseData.detail}
-        </div>
-        <div className="w-[400px] py-2 px-3 rounded text-lg my-2">
-          {courseData.hour}
-        </div>
-        <div className="flex space-x-4">
-          <div className="w-[300px] py-2 px-3 rounded text-lg my-2">
-            {courseData.totalmember}
-          </div>
-          <div className="w-[300px] py-2 px-3 rounded text-lg my-2">
-            {courseData.price}
+
+        {/* Buttons */}
+        <div className="flex justify-between items-center mt-8">
+          <Link
+            href="/"
+            className="bg-gray-400 text-white px-8 py-3 rounded hover:bg-gray-500 text-lg"
+          >
+            Back
+          </Link>
+          <div className="flex space-x-4">
+            <EnrollBtn course_id={courseData._id} />
+            <FavoriteBtn course_id={courseData._id} />
           </div>
         </div>
-        <div className="flex space-x-4"></div>
-        <div className="w-[100px] bg-red-500 text-white border py-2 px-3 rounded text-lg my-2 text-center">
-          {courseData.coursetype}
-        </div>
-      </div>
-      <div className="flex justify-end space-x-4">
-        <Link
-          href="/"
-          className="flex items-center justify-center w-[80px] bg-gray-400 inline-block border py-2 px-3 rounded text-lg my-3"
-        >
-          Back
-        </Link>
-        <button
-          onClick={() => {
-            if (confirm("Are you sure you want to enroll in the course?")) {
-              alert("Enrolled in the course!");
-            }
-          }}
-          className="flex items-center justify-center w-[120px] bg-green-500 text-white border py-2 px-3 rounded text-lg my-3"
-        >
-          Enroll
-        </button>
-        <button
-          onClick={() => alert("Added to favourites!")}
-          className="flex items-center justify-center w-[120px] bg-yellow-500 text-white border py-2 px-3 rounded text-lg my-3"
-        >
-          Favourite
-        </button>
       </div>
     </div>
   );
