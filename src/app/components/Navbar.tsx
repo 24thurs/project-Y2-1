@@ -5,7 +5,8 @@ import "../globals.css";
 import Image from 'next/image';
 import { useState, useEffect } from "react";
 import { checkCookie, deleteSession } from "@/serveraction/serverActions";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,9 +25,12 @@ const Navbar = () => {
   }, []);
 
   const pathname = usePathname();
+  const router = useRouter();
 
   const handleLogout = async () => {
     await deleteSession(pathname);
+    router.push('/');
+    window.location.reload();
   };
 
   const navWidthClass = pathname === "/" ? "w-full md:w-auto" : "w-full md:w-64";
@@ -34,7 +38,7 @@ const Navbar = () => {
   if (!cookie) {
     return (
       <>
-        <div className="flex h-full">
+        <div className="flex h-full ">
           <nav
             className={`pl-5 pr-5 text-center rounded-e-xl bg-[#395886] text-white z-40 transition-transform duration-300 ${navWidthClass}`}
           >
@@ -50,7 +54,7 @@ const Navbar = () => {
                 Username
               </h2>
               <button
-                className="fixed top-2 right-4 md:hidden bg-[#395886] text-white text-2xl p-4 rounded z-50 shadow-lg"
+                className=" top-2 right-4 md:hidden bg-[#395886] text-white text-2xl p-4 rounded z-50 "
                 onClick={toggleMenu}
               >
                 ☰

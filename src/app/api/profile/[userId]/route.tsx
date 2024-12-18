@@ -13,7 +13,7 @@ export async function GET(req: Request) {
             return NextResponse.json({ error: "User not found" }, { status: 404 });
         }
 
-        const course = await Course.find({})
+        const course = await Course.find({userid : userId})
         return NextResponse.json({ user, course});
     } catch (error) {
         return NextResponse.json(
