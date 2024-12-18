@@ -34,9 +34,9 @@ export function Profile() {
         </div>
 
         <h2 className="text-xl font-bold text-black mb-2">
-          หน้านี้ไม่สามารถเข้าได้
+         This page cannot be accessed
         </h2>
-        <p className="text-black mb-6">กรุณาเข้าสู่ระบบก่อนใช้งาน</p>
+        <p className="text-black mb-6">Please log in before using</p>
 
         <div className="flex justify-center space-x-4 mb-4">
           <button className="bg-blue-500 text-white w-[100px] h-[40px] text-xl rounded-md hover:bg-blue-600 transition">

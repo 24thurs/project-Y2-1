@@ -41,14 +41,14 @@ function Home() {
   const handleFilter = () => {
     const finalMinPrice = minPrice || "ไม่จำกัด";
     const finalMaxPrice = maxPrice || "ไม่จำกัด";
-    console.log("ราคา:", finalMinPrice, "-", finalMaxPrice);
-    console.log("สถานะ:", status || "ไม่ระบุ");
-    console.log("เรียงตาม:", sortOrder || "ไม่ระบุ");
+    console.log("price:", finalMinPrice, "-", finalMaxPrice);
+    console.log("status:", status || "ไม่ระบุ");
+    console.log("sortorder:", sortOrder || "ไม่ระบุ");
     setIsOpen(false);
   };
 
   return (
-    <div style={{ backgroundColor: "#EAEFF8", minHeight: "100vh" }}>
+    <div className = "bg-[#EAEFF8]">
     <div className="flex flex-col md:flex-row">
       <div className="md:mr-4">
         <Navbar/>
@@ -144,7 +144,7 @@ function Home() {
             onClick={toggleDropdown}
             className="flex items-center bg-gray-200 px-4 py-2 rounded-lg hover:bg-gray-300 z-20"
         >
-            <span>ตัวกรอง</span>
+            <span>SearchOrder</span>
           <svg
             className="w-5 h-5 ml-2"
             fill="none"
@@ -163,14 +163,14 @@ function Home() {
        {isOpen && (
       <div className="absolute right-0 top-14 w-64 bg-white border border-gray-200 rounded-lg shadow-lg p-4 z-10">
         <div className="mb-4">
-          <label className="block font-semibold mb-2">ราคา</label>
+          <label className="block font-semibold mb-2">Price</label>
             <div className="flex items-center space-x-2">
               <input
                 type="number"
                 value={minPrice}
                 onChange={(e) => setMinPrice(e.target.value)}
                 className="w-1/2 p-1 border rounded"
-                placeholder="ขั้นต่ำ"
+                placeholder="Min"
               />
             <span>-</span>
               <input
@@ -178,33 +178,33 @@ function Home() {
                 value={maxPrice}
                 onChange={(e) => setMaxPrice(e.target.value)}
                 className="w-1/2 p-1 border rounded"
-                placeholder="สูงสุด"
+                placeholder="Max"
               />
             </div>
         </div>
 
         <div className="mb-4">
-          <label className="block font-semibold mb-2">สถานะ</label>
+          <label className="block font-semibold mb-2">Status</label>
             <label className="flex items-center space-x-2">
               <input
                 type="checkbox"
-                checked={status === "เต็ม"}
-                onChange={() => setStatus(status === "เต็ม" ? "" : "เต็ม")}
+                checked={status === "Full"}
+                onChange={() => setStatus(status === "Full" ? "" : "Full")}
               />
-                <span>เต็ม</span>
+                <span>Full</span>
           </label>
             <label className="flex items-center space-x-2">
               <input
                 type="checkbox"
-                checked={status === "ว่าง"}
-                onChange={() => setStatus(status === "ว่าง" ? "" : "ว่าง")}
+                checked={status === "available"}
+                onChange={() => setStatus(status === "available" ? "" : "available")}
               />
-            <span>ว่าง</span>
+            <span>Available</span>
             </label>
         </div>
 
         <div className="mb-4">
-          <label className="block font-semibold mb-2">เรียงตาม</label>
+          <label className="block font-semibold mb-2">SortOrder</label>
           <label className="flex items-center space-x-2">
             <input
               type="radio"
@@ -212,7 +212,7 @@ function Home() {
               checked={sortOrder === "low-to-high"}
               onChange={() => setSortOrder("low-to-high")}
             />
-            <span>ราคาต่ำ - สูง</span>
+            <span>Price of Course Min - Max</span>
           </label>
           <label className="flex items-center space-x-2">
             <input
@@ -221,7 +221,7 @@ function Home() {
               checked={sortOrder === "high-to-low"}
               onChange={() => setSortOrder("high-to-low")}
             />
-            <span>ราคาสูง - ต่ำ</span>
+            <span>Price of Course Min - Max</span>
           </label>
         </div>
 
@@ -229,7 +229,7 @@ function Home() {
           onClick={handleFilter}
           className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
         >
-          ตกลง
+          Summit
         </button>
       </div>
       )}

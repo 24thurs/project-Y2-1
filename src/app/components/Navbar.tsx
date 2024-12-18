@@ -33,9 +33,10 @@ const Navbar = () => {
   if (!cookie) {
     return (
       <>
+      <div className="flex h-full">
         <nav
-          className="pl-5 pr-5 text-center h-full content-center rounded-e-xl bg-slate-[#395886] bg-[#395886] text-white z-40 transition-transform duration-300"
-        >
+          className="pl-5 pr-5 text-center rounded-e-xl bg-[#395886] text-white z-40 transition-transform duration-300 w-full md:w-auto"
+         >
           <div className="flex justify-between items-center p-4">
           <h2 className="p-2  text-2xl flex justify-center items-center">
           <Image
@@ -47,7 +48,7 @@ const Navbar = () => {
           />
             Username
         </h2>
-            <button className="fixed top-2 right-4 md:hidden text-xl bg-[#395886] text-white p-2 rounded z-50 shadow-lg"
+            <button className="fixed top-2 right-4 md:hidden bg-[#395886] text-white text-2xl p-4 rounded z-50 shadow-lg"
               onClick={toggleMenu}>
               ☰
             </button>
@@ -155,14 +156,16 @@ const Navbar = () => {
           </div>
         </div>
         </nav>
+        </div>
       </>
     );
   } else {
     return (
       <>
-      <nav
-          className="pl-5 pr-5 text-center h-full content-center rounded-e-xl bg-slate-[#395886] bg-[#395886] text-white z-40 transition-transform duration-300"
-        >
+        <div className="flex h-full">
+         <nav
+          className="pl-5 pr-5 text-center rounded-e-xl bg-[#395886] text-white z-40 transition-transform duration-300 w-full md:w-auto"
+         >
         <h2 className="p-2 mt-3 text-2xl flex justify-center items-center">
           <Image
              src="/image/icon.png" 
@@ -274,6 +277,7 @@ const Navbar = () => {
           </div>
         </div>
         </nav>
+        </div>
       </>
         
     );

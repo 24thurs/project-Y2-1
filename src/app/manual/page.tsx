@@ -14,50 +14,39 @@ const Manual = () => {
   const guides = [
     {
       id: 1,
-      title: "วิธีการสร้างคอร์ส",
-      content: "เนื้อหาคู่มือที่ 1",
+      title: "How to create Course",
+      content: "Can create courses by going to the Home page click Create Course , fill in complete information and create it.",
       image: "/image/manual01.png",
     },
     {
       id: 2,
-      title: "สร้างวิชาสอน",
-      content: "เนื้อหาคู่มือที่ 2",
-      image: "/image/manual02.png",
-    },
-    {
-      id: 3,
-      title: "เข้าร่วมเรียน",
-      content: "เข้าร่วมเรียน",
+      title: "How to join class",
+      content: "You can view  Cousers on ' Home '. When you are interested this one, you can click ' Join ' to join the class.",
       image: "/image/manual03.png",
     },
     {
-      id: 4,
-      title: "รีวิววิชาเรียน",
-      content: "เนื้อหาคู่มือที่ 2",
+      id: 3,
+      title: "How to review course",
+      content: "You can select ' Review ' menu and select the course you want to review.",
       image: "/image/manaul04.png",
     },
     {
-      id: 5,
-      title: "ติดต่อผู้สอน",
-      content: "เนื้อหาคู่มือที่ 2",
+      id: 4,
+      title: "How to report a problem",
+      content: "You can report problems via email studyfinder@gmail.com or add Line id : @studyfinder",
       image: "/image/manual05.png",
-    },
-    {
-      id: 6,
-      title: "แจ้งปัญหา",
-      content: "เนื้อหาคู่มือที่ 2",
-      image: "/image/manual06.png",
     }
     
 
   ];
   
   return (
-    <div className="flex flex-col md:flex-row">
-      <div className="md:mr-4">
-        <Navbar />
-      </div>
-      <div className="w-full max-w-3xl mx-auto mt-8 flex-grow flex flex-col justify-center">
+    
+    <div className="flex  flex-col md:flex-row bg-[#EAEFF8] ">
+    <div className=" ">
+      <Navbar />
+    </div>
+      <div className="w-full max-w-3xl mx-auto mt-8 flex-grow flex-col ">
          <div className="w-full text-center mt-8">
          <h1 className="text-5xl font-bold text-[#333]"> 
           Manual
@@ -79,7 +68,7 @@ const Manual = () => {
                   height={90}
                   className="mr-4"
                 />
-                <span className="font-bold text-black">{guide.title}</span>
+                <span className="font-bold text-black text-2xl">{guide.title}</span>
               </div>
               <span
                 className={`transform transition-transform ${
