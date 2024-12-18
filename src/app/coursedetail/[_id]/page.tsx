@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { getCourseById } from "@/serveraction/serverActions";
+import { getCourseById, checkCookie } from "@/serveraction/serverActions";
 import Navbar from "../../components/Navbar";
 import EnrollBtn from "@/app/components/EnrollBtn";
 import FavoriteBtn from "@/app/components/FavoriteBtn";
@@ -15,7 +15,19 @@ interface Params {
 
 const CourseDetailPage = ({ params }: { params: Promise<Params> }) => {
   const [unwrappedParams, setUnwrappedParams] = useState<Params | null>(null);
-  const [courseData, setCourseData] =useState<{ _id: string; img: string; coursename: string; teacher: string; subject: string; coursetype: string; totalmember: number; price: number; }[]>([]);
+  const [courseData, setCourseData] = useState<
+    {
+      _id: string;
+      img: string;
+      coursename: string;
+      teacher: string;
+      subject: string;
+      coursetype: string;
+      totalmember: number;
+      price: number;
+    }[]
+  >([]);
+  const [cookie, setCookie] = useState(false);
 
   useEffect(() => {
     params.then((resolvedParams) => {
@@ -36,11 +48,16 @@ const CourseDetailPage = ({ params }: { params: Promise<Params> }) => {
   }, [unwrappedParams]);
 
   const router = useRouter();
+  useEffect(() => {
+    async function getCookie() {
+      const isCookie = await checkCookie();
+      if (isCookie) setCookie(true);
+    }
+    getCookie();
+  }, []);
 
   if (!unwrappedParams || !courseData) {
-    return (
-      <Loading/>
-    );
+    return <Loading />;
   }
 
   return (
@@ -143,8 +160,8 @@ const CourseDetailPage = ({ params }: { params: Promise<Params> }) => {
             Back
           </Link>
           <div className="flex space-x-4">
-            <EnrollBtn course_id={courseData._id} />
-            <FavoriteBtn course_id={courseData._id} />
+            <EnrollBtn course_id={courseData._id} cookie={cookie}/>
+            <FavoriteBtn course_id={courseData._id} cookie={cookie} />
           </div>
         </div>
       </div>

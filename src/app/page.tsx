@@ -119,37 +119,36 @@ function Home() {
   return (
     <div style={{ backgroundColor: "#EAEFF8", minHeight: "100vh" }}>
       <div className="flex flex-col md:flex-row">
-        <div>
-          <Navbar />
-        </div>
+        <Navbar />
+
         <main className="container mx-auto my-8 px-4">
           {isLoading ? (
-            <Loading/>
+            <Loading />
           ) : (
             <>
               <div className="flex justify-center items-center w-full pl-1">
                 <div className="bg-white rounded-lg shadow-md p-4 relative w-full max-w-4xl flex">
                   <input
                     type="text"
-                    placeholder="ค้นหา..."
+                    placeholder="search..."
                     className="flex-grow border p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                  />
+                  />{" "}
+                    {searchTerm && (
+                    <button
+                      className="absolute inset-y-0 pr-3 right-25 flex items-center text-sm leading-5"
+                      onClick={() => setSearchTerm("")}
+                    >
+                      ✕
+                    </button>
+                    )}
                   <button
                     className="ml-2 bg-blue-500 text-white px-4 py-2 rounded"
                     onClick={handleSearch}
                   >
                     Search
                   </button>
-                  {searchTerm && (
-                    <button
-                      className="absolute inset-y-0 right-3 pr-3 flex items-center text-sm leading-5"
-                      onClick={() => setSearchTerm("")}
-                    >
-                      ✕
-                    </button>
-                  )}
                 </div>
               </div>
 
@@ -182,6 +181,25 @@ function Home() {
                       <button
                         key={subject.id}
                         className="bg-[#83AEEC] hover:bg-gray-300 text-gray-800 font-bold py-6 px-4 rounded-lg transition duration-300 ease-in-out w-40 h-40"
+                        onClick={async () => {
+                          setIsSearching(true);
+                          setSearchTerm(subject.title);
+                          try {
+                            const response = await fetch(
+                              `/api/search?query=${subject.title}`
+                            );
+                            const data = await response.json();
+                            setResults(data);
+                            if (response.ok) {
+                              console.log(data);
+                            }
+                          } catch (error) {
+                            console.error(
+                              "Error fetching search results:",
+                              error
+                            );
+                          }
+                        }}
                       >
                         <div className="flex flex-col items-center justify-center h-full">
                           <img
@@ -238,7 +256,9 @@ function Home() {
                   {isOpen && (
                     <div className="absolute right-0 top-14 w-64 bg-white border border-gray-200 rounded-lg shadow-lg p-4 z-10">
                       <div className="mb-4">
-                        <label className="block font-semibold mb-2">Price</label>
+                        <label className="block font-semibold mb-2">
+                          Price
+                        </label>
                         <div className="flex items-center space-x-2">
                           <input
                             type="number"
@@ -259,7 +279,9 @@ function Home() {
                       </div>
 
                       <div className="mb-4">
-                        <label className="block font-semibold mb-2">Status</label>
+                        <label className="block font-semibold mb-2">
+                          Status
+                        </label>
                         <label className="flex items-center space-x-2">
                           <input
                             type="checkbox"
@@ -275,7 +297,9 @@ function Home() {
                             type="checkbox"
                             checked={status === "available"}
                             onChange={() =>
-                              setStatus(status === "available" ? "" : "available")
+                              setStatus(
+                                status === "available" ? "" : "available"
+                              )
                             }
                           />
                           <span>Available</span>
