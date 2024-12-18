@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { checkCookie } from "@/serveraction/serverActions";
 import HandleUser from "../components/HandleUser";
+import Loading from "../components/Loading";
 
 type Course = {
   id: number;
@@ -75,6 +76,7 @@ const ReviewPage = () => {
   const [reviewDetails, setReviewDetails] = useState<string>("");
   const [currentSlide, setCurrentSlide] = useState(0);
   const [coursesPerSlide, setCoursesPerSlide] = useState(3); // Default
+  const [loading, setLoading] = useState(true); // Loading state
 
   // คำนวณจำนวน coursesPerSlide ตามขนาดหน้าจอ
   useEffect(() => {
@@ -128,9 +130,16 @@ const ReviewPage = () => {
     async function getCookie() {
       const isCookie = await checkCookie();
       if (isCookie) setCookie(true);
+      setLoading(false); // Set loading to false after checking cookie
     }
     getCookie();
   }, []);
+
+  if (loading) {
+    return (
+      <Loading/>
+    );
+  }
 
   if (!cookie) {
     return <HandleUser />;
@@ -205,7 +214,7 @@ const ReviewPage = () => {
 
           {/* Review Section */}
           {selectedCourseId && (
-            <div className="bg-[#EAEFF8] p-6 rounded-md">
+            <div className="bg-yellow-200 p-6 rounded-md">
               <h2 className="text-lg font-bold text-center mb-4">
                 Evaluation of teachers and subjects
               </h2>

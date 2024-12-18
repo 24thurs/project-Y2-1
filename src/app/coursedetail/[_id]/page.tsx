@@ -75,7 +75,7 @@ const CourseDetailPage = ({ params }: { params: Promise<Params> }) => {
         </div>
         <div className="max-w-full mx-auto bg-[#EAEFF8] shadow-lg rounded-lg p-6 flex flex-col md:flex-row md:flex-row-reverse">
           {/* Image Section */}
-          <div className="w-[350px] h-[220px] bg-gray-200 rounded-md shadow-lg md:ml-6 mb-4 md:mb-0">
+          <div className="w-[420px] h-[280px] bg-gray-200 rounded-md shadow-lg md:ml-6 mb-4 md:mb-0">
             {courseData.img ? (
               <img
                 src={courseData.img}
@@ -84,7 +84,7 @@ const CourseDetailPage = ({ params }: { params: Promise<Params> }) => {
               />
             ) : (
               <span className="text-gray-500 flex items-center justify-center h-full">
-                350 x 220
+                420 x 280
               </span>
             )}
           </div>
@@ -93,19 +93,19 @@ const CourseDetailPage = ({ params }: { params: Promise<Params> }) => {
           <div className="flex-1 space-y-4">
             {/* Course Name */}
             <div className="bg-white rounded-xl p-4">
-              <label className="text-gray-700 font-semibold">Course Name</label>
+              <label className="text-gray-700 font-bold text-2xl">Course Name</label>
               <p className="text-lg">{courseData.coursename}</p>
             </div>
 
             {/* Subject */}
             <div className="bg-white rounded-xl p-4">
-              <label className="text-gray-700 font-semibold">Subject</label>
+              <label className="text-gray-700 font-bold text-2xl">Subject</label>
               <p className="text-lg">{courseData.subject}</p>
             </div>
 
             {/* Teacher Name */}
             <div className="bg-white rounded-xl p-4">
-              <label className="text-gray-700 font-semibold">
+              <label className="text-gray-700 font-bold text-2xl">
                 Teacher Name
               </label>
               <p className="text-lg">{courseData.teacher}</p>
@@ -113,22 +113,22 @@ const CourseDetailPage = ({ params }: { params: Promise<Params> }) => {
 
             {/* Course Detail */}
             <div className="bg-white rounded-xl p-4">
-              <label className="text-gray-700 font-semibold">
-                Course Detail
-              </label>
-              <p className="text-lg">{courseData.detail}</p>
+              <label className="text-gray-700 font-bold text-2xl">Course Detail</label>
+              <p className="text-lg" style={{ whiteSpace: 'pre-line' }}>
+                {courseData.detail}
+              </p>
             </div>
 
             {/* Hours Content and Total Members */}
             <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
               <div className="bg-white rounded-xl p-4">
-                <label className="text-gray-700 font-semibold">
+                <label className="text-gray-700 font-bold text-2xl">
                   Hours Content
                 </label>
                 <p className="text-lg">{courseData.hour}</p>
               </div>
               <div className="bg-white rounded-xl p-4">
-                <label className="text-gray-700 font-semibold">
+                <label className="text-gray-700 font-bold text-2xl">
                   Total Members
                 </label>
                 <p className="text-lg">{courseData.totalmember}</p>
@@ -137,7 +137,7 @@ const CourseDetailPage = ({ params }: { params: Promise<Params> }) => {
 
             {/* Price per Person */}
             <div className="bg-white rounded-xl p-4">
-              <label className="text-gray-700 font-semibold">
+              <label className="text-gray-700 font-bold text-2xl">
                 Price per Person
               </label>
               <p className="text-lg">{courseData.price}</p>
@@ -145,7 +145,7 @@ const CourseDetailPage = ({ params }: { params: Promise<Params> }) => {
 
             {/* Course Type */}
             <div className="bg-white rounded-xl p-4">
-              <label className="text-gray-700 font-semibold">Course Type</label>
+              <label className="text-gray-700 font-bold text-2xl">Course Type</label>
               <p className="text-lg">{courseData.coursetype}</p>
             </div>
           </div>

@@ -70,7 +70,7 @@ export async function createSession(userId: string) {
     path: "/",
   });
 
-  redirect("/");
+  // redirect("/");
 }
 
 export async function deleteSession(currentPath: string) {
@@ -96,19 +96,19 @@ export async function login(prevState: FormState, formData: FormData) {
 
   if (!resCheckUser.ok) {
     console.error("User not found");
-    return { message: "user not found" };
+    return { message: "", error: "user not found" };
   }
   const data = await resCheckUser.json();
   const passwordMatch = await bcrypt.compare(password, data.user.password);
 
   if (!passwordMatch) {
-    return { message: "wrong user or password" };
+    return { message: "", error: "email or password is wrong" };
   }
 
   const userId = data.user._id.toString();
   await createSession(userId);
 
-  return { message: "user found" };
+  return { message: "login successfully" };
 }
 
 export async function getProfile() {

@@ -350,8 +350,8 @@ function Home() {
                             <Image
                               className="w-full h-48 object-cover"
                               src={val.img}
-                              width={100}
-                              height={100}
+                              width={420}
+                              height={280}
                               alt={val.coursename}
                               priority
                             />
@@ -404,8 +404,8 @@ function Home() {
                               <Image
                                 className="w-full h-48 object-cover"
                                 src={result.img}
-                                width={100}
-                                height={100}
+                                width={420}
+                                height={280}
                                 alt={result.coursename}
                                 priority
                               />
