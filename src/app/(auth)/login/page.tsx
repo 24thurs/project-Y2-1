@@ -87,7 +87,7 @@ const LoginPage = () => {
               className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
             >
                 <img
-                src={showPassword ? "/image/hide.png" : "/image/show.png"}
+                src={showPassword ? "/image/show.png" : "/image/hide.png"}
                 alt={showPassword ? "Hide" : "Show"}
                 className="h-5 w-5"
                 />

@@ -3,6 +3,8 @@
 import Navbar from "../components/Navbar";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { checkCookie } from "@/serveraction/serverActions";
+import HandleUser from "../components/HandleUser";
 
 type Course = {
   id: number;
@@ -119,137 +121,152 @@ const ReviewPage = () => {
     setCurrentSlide((prev) => (prev - 1 >= 0 ? prev - 1 : prev));
   };
 
-   const router = useRouter();
+  const router = useRouter();
 
-  return (
-    <div className="flex bg-gray-100 min-h-screen">
-      <div className="md:mr-4">
-        <Navbar />
-      </div>
+  const [cookie, setCookie] = useState(false);
+  useEffect(() => {
+    async function getCookie() {
+      const isCookie = await checkCookie();
+      if (isCookie) setCookie(true);
+    }
+    getCookie();
+  }, []);
 
-      <main className="flex-1 p-8 bg-white">
-        <div className="flex justify-center mb-2">
-          <div className="bg-blue-500 text-white py-2 px-4 rounded-lg shadow-md">
-            <h2 className="text-2xl font-bold text-center">
-              Course and Instructor Reviews
-            </h2>
-          </div>
+  if (!cookie) {
+    return <HandleUser />;
+  } else {
+    return (
+      <div className="flex bg-gray-100 min-h-screen">
+        <div className="md:mr-4">
+          <Navbar />
         </div>
 
-        {/* Course Carousel */}
-        <div className="relative mb-8">
-          {/* Left Navigation */}
-          <button
-            className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-[#EAEFF8] text-brack px-4 py-2 rounded-full shadow-lg hover:bg-green-600"
-            onClick={handlePrevSlide}
-            disabled={currentSlide === 0}
-          >
-            ←
-          </button>
+        <main className="flex-1 p-8 bg-white">
+          <div className="flex justify-center mb-2">
+            <div className="bg-blue-500 text-white py-2 px-4 rounded-lg shadow-md">
+              <h2 className="text-2xl font-bold text-center">
+                Course and Instructor Reviews
+              </h2>
+            </div>
+          </div>
 
-          <div className="flex overflow-hidden space-x-4 mx-12 px-5 py-4">
-            {courses
-              .slice(
-                currentSlide * coursesPerSlide,
-                (currentSlide + 1) * coursesPerSlide
-              )
-              .map((course) => (
-                <div
-                  key={course.id}
-                  className={`w-full sm:w-1/2 md:w-1/3 lg:w-1/4 bg-gray-100 shadow-lg rounded-lg p-4 hover:scale-105 transform transition-transform ${
-                    selectedCourseId === course.id
-                      ? "border-4 border-green-500"
-                      : ""
-                  }`}
-                  onClick={() => handleCourseSelect(course.id)}
+          {/* Course Carousel */}
+          <div className="relative mb-8">
+            {/* Left Navigation */}
+            <button
+              className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-[#EAEFF8] text-brack px-4 py-2 rounded-full shadow-lg hover:bg-green-600"
+              onClick={handlePrevSlide}
+              disabled={currentSlide === 0}
+            >
+              ←
+            </button>
+
+            <div className="flex overflow-hidden space-x-4 mx-12 px-5 py-4">
+              {courses
+                .slice(
+                  currentSlide * coursesPerSlide,
+                  (currentSlide + 1) * coursesPerSlide
+                )
+                .map((course) => (
+                  <div
+                    key={course.id}
+                    className={`w-full sm:w-1/2 md:w-1/3 lg:w-1/4 bg-gray-100 shadow-lg rounded-lg p-4 hover:scale-105 transform transition-transform ${
+                      selectedCourseId === course.id
+                        ? "border-4 border-green-500"
+                        : ""
+                    }`}
+                    onClick={() => handleCourseSelect(course.id)}
+                  >
+                    <img
+                      src={course.image}
+                      alt={course.title}
+                      className="w-full h-40 object-cover rounded-md"
+                    />
+                    <div className="text-center mt-4">
+                      <h3 className="text-lg font-semibold">{course.title}</h3>
+                      <p className="text-gray-500">{course.description}</p>
+                      <p className="text-green-600 mt-2 font-bold">
+                        {course.price} บาท / คน
+                      </p>
+                    </div>
+                  </div>
+                ))}
+            </div>
+
+            {/* Right Navigation */}
+            <button
+              className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-[#EAEFF8] text-brack px-4 py-2 rounded-full shadow-lg hover:bg-green-600"
+              onClick={handleNextSlide}
+              disabled={currentSlide === totalSlides - 1}
+            >
+              →
+            </button>
+          </div>
+
+          {/* Review Section */}
+          {selectedCourseId && (
+            <div className="bg-[#EAEFF8] p-6 rounded-md">
+              <h2 className="text-lg font-bold text-center mb-4">
+                Evaluation of teachers and subjects
+              </h2>
+
+              <div className="grid grid-cols-2 gap-4 mb-4">
+                {ratingCriteria.map((criterion, index) => (
+                  <div key={index}>
+                    <label className="block mb-2 font-medium">
+                      {criterion}
+                    </label>
+                    <div className="flex space-x-4">
+                      {[1, 2, 3, 4, 5].map((rating) => (
+                        <button
+                          key={rating}
+                          onClick={() =>
+                            handleRating(selectedCourseId, index, rating)
+                          }
+                          className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                            ratings[selectedCourseId]?.[index] === rating
+                              ? "bg-green-600 text-white"
+                              : "bg-gray-300 text-gray-600"
+                          }`}
+                        >
+                          {rating}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div>
+                <label className="block mb-2 font-medium">
+                  รายละเอียดเพิ่มเติม
+                </label>
+                <textarea
+                  className="w-full border-2 border-gray-300 rounded-md p-2 focus:outline-green-500"
+                  rows={4}
+                  placeholder="เขียนความคิดเห็นเพิ่มเติมเกี่ยวกับคอร์สนี้..."
+                  value={reviewDetails}
+                  onChange={(e) => setReviewDetails(e.target.value)}
+                ></textarea>
+              </div>
+
+              <div className="flex justify-end space-x-4 mt-6">
+                <button
+                  className="bg-gray-500 text-white px-6 py-2 rounded-md hover:bg-red-600"
+                  onClick={() => router.push("/")}
                 >
-                  <img
-                    src={course.image}
-                    alt={course.title}
-                    className="w-full h-40 object-cover rounded-md"
-                  />
-                  <div className="text-center mt-4">
-                    <h3 className="text-lg font-semibold">{course.title}</h3>
-                    <p className="text-gray-500">{course.description}</p>
-                    <p className="text-green-600 mt-2 font-bold">
-                      {course.price} บาท / คน
-                    </p>
-                  </div>
-                </div>
-              ))}
-          </div>
-
-          {/* Right Navigation */}
-          <button
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-[#EAEFF8] text-brack px-4 py-2 rounded-full shadow-lg hover:bg-green-600"
-            onClick={handleNextSlide}
-            disabled={currentSlide === totalSlides - 1}
-          >
-            →
-          </button>
-        </div>
-
-        {/* Review Section */}
-        {selectedCourseId && (
-          <div className="bg-[#EAEFF8] p-6 rounded-md">
-            <h2 className="text-lg font-bold text-center mb-4">
-              Evaluation of teachers and subjects
-            </h2>
-
-            <div className="grid grid-cols-2 gap-4 mb-4">
-              {ratingCriteria.map((criterion, index) => (
-                <div key={index}>
-                  <label className="block mb-2 font-medium">{criterion}</label>
-                  <div className="flex space-x-4">
-                    {[1, 2, 3, 4, 5].map((rating) => (
-                      <button
-                        key={rating}
-                        onClick={() =>
-                          handleRating(selectedCourseId, index, rating)
-                        }
-                        className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                          ratings[selectedCourseId]?.[index] === rating
-                            ? "bg-green-600 text-white"
-                            : "bg-gray-300 text-gray-600"
-                        }`}
-                      >
-                        {rating}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              ))}
+                  Back to Home
+                </button>
+                <button className="bg-green-500 text-white px-6 py-2 rounded-md hover:bg-green-600">
+                  Confirm
+                </button>
+              </div>
             </div>
-
-            <div>
-              <label className="block mb-2 font-medium">
-                รายละเอียดเพิ่มเติม
-              </label>
-              <textarea
-                className="w-full border-2 border-gray-300 rounded-md p-2 focus:outline-green-500"
-                rows={4}
-                placeholder="เขียนความคิดเห็นเพิ่มเติมเกี่ยวกับคอร์สนี้..."
-                value={reviewDetails}
-                onChange={(e) => setReviewDetails(e.target.value)}
-              ></textarea>
-            </div>
-
-            <div className="flex justify-end space-x-4 mt-6">
-              <button
-                className="bg-gray-500 text-white px-6 py-2 rounded-md hover:bg-red-600"
-                onClick={() => router.push("/")}
-              >
-                Back to Home
-              </button>
-              <button className="bg-green-500 text-white px-6 py-2 rounded-md hover:bg-green-600">
-                Confirm
-              </button>
-            </div>
-          </div>
-        )}
-      </main>
-    </div>
-  );
+          )}
+        </main>
+      </div>
+    );
+  }
 };
 
 export default ReviewPage;

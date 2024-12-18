@@ -119,7 +119,7 @@ function Home() {
   return (
     <div style={{ backgroundColor: "#EAEFF8", minHeight: "100vh" }}>
       <div className="flex flex-col md:flex-row">
-        <div className="md:mr-4">
+        <div>
           <Navbar />
         </div>
         <main className="container mx-auto my-8 px-4">

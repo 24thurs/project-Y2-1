@@ -7,11 +7,14 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import DeleteBtn from "../components/DeleteBtn";
 import HandleUser from "../components/HandleUser";
+import Loading from "../components/Loading";
 
 
 export function Profile() {
   const [profile, setProfile] = useState<any>(null);
   const [courseData, setCourseData] = useState<{ _id: string; img: string; coursename: string; teacher: string; subject: string; coursetype: string; totalmember: number; price: number; }[]>([]);
+
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchProfile() {
@@ -20,9 +23,16 @@ export function Profile() {
         setProfile(initialProfile);
         setCourseData(initialProfile.course || []);
       }
+      setLoading(false);
     }
     fetchProfile();
   }, []);
+  
+  if (loading) {
+    return (
+      <Loading/>
+    );
+  }
 
   if (!profile) {
     return ( 
@@ -50,7 +60,7 @@ export function Profile() {
           {profile.user.username}
         </p>
         <p className="text-xl text-gray-600 font-semibold">
-          <span className="font-bold">Name-Surname :</span> {profile.user.fullName}
+          <span className="font-bold">Name-Surname :</span> {profile.user.fullname}
         </p>
         <p className="text-xl text-gray-600">
           <span className="font-bold">Email :</span> {profile.user.email}
@@ -127,3 +137,4 @@ export function Profile() {
   );
 }
 export default Profile;
+
