@@ -78,7 +78,7 @@ const CreatePage = () => {
 
         <div className="max-w-full mx-auto bg-[#EAEFF8] shadow-lg rounded-lg p-6 flex flex-col md:flex-row">
           {/* Image Section */}
-          <div className="w-[350px] h-[220px] bg-gray-200 rounded-md shadow-lg mb-4 md:mb-0 md:ml-6 order-1 md:order-2">
+          <div className="w-[550px] h-[420px] bg-gray-200 rounded-md shadow-lg mb-4 md:mb-0 md:ml-6 order-1 md:order-2">
             {imageUrl ? (
               <img
                 src={imageUrl}
@@ -129,6 +129,7 @@ const CreatePage = () => {
                   placeholder="subject . . ."
                   className="w-full py-2 px-4 border rounded-xl focus:ring-2 focus:ring-blue-400"
                   required
+                  name="subject"
                   onFocus={() => setIsDropdownOpen(true)}
                 />
                 {isDropdownOpen && filteredOptions.length > 0 && (
@@ -146,8 +147,6 @@ const CreatePage = () => {
                 )}
               </div>
             </div>
-
-
 
             <style jsx>{`
               ul {
