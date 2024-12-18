@@ -78,7 +78,7 @@ const CreatePage = () => {
 
         <div className="max-w-full mx-auto bg-[#EAEFF8] shadow-lg rounded-lg p-6 flex flex-col md:flex-row">
           {/* Image Section */}
-          <div className="w-[350px] h-[220px] bg-gray-200 rounded-md shadow-lg mb-4 md:mb-0 md:ml-6 order-1 md:order-2">
+          <div className="w-[400px] h-[280px] bg-gray-200 rounded-md shadow-lg mb-4 md:mb-0 md:ml-6 order-1 md:order-2">
             {imageUrl ? (
               <img
                 src={imageUrl}
@@ -88,7 +88,7 @@ const CreatePage = () => {
               />
             ) : (
               <span className="text-gray-500 flex items-center justify-center h-full">
-                350 x 220
+                400 x 280
               </span>
             )}
           </div>
