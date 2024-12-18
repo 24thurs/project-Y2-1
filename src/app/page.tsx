@@ -88,6 +88,16 @@ function Home() {
     { id: 3, title: "Computer", image: "/image/Computer.png" },
     { id: 4, title: "History", image: "/image/History.png" },
     { id: 5, title: "Science", image: "/image/Science.png" },
+    { id: 6, title: "Art", image: "/image/art.png" },
+    { id: 7, title: "Music", image: "/image/music.png" },
+    { id: 8, title: "Physical", image: "/image/physical.png" },
+    { id: 9, title: "ComScience", image: "/image/comsci.png" },
+    { id: 10, title: "Economics", image: "/image/Economics.png" },
+    { id: 11, title: "Geography", image: "/image/Geography.png" },
+    { id: 12, title: "Literature", image: "/image/Literature.png" },
+    { id: 13, title: "Philosophy", image: "/image/Philosophy.png" },
+    { id: 14, title: "Sociology", image: "/image/Sociology.png" },
+    { id: 15, title: "Psychology", image: "/image/Psychology.png" }
   ];
 
   // Calculate the number of courses per slide based on screen size
@@ -129,25 +139,30 @@ function Home() {
               <div className="flex justify-center items-center w-full pl-1">
                 <div className="bg-white rounded-lg shadow-md p-4 relative w-full max-w-4xl flex">
                   <input
-                    type="text"
-                    placeholder="search..."
-                    className="flex-grow border p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                  />{" "}
-                    {searchTerm && (
-                    <button
-                      className="absolute inset-y-0 pr-3 right-25 flex items-center text-sm leading-5"
-                      onClick={() => setSearchTerm("")}
-                    >
-                      ✕
-                    </button>
-                    )}
+                  type="text"
+                  placeholder="search..."
+                  className="flex-grow border p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Escape") {
+                    setSearchTerm("");
+                    }
+                  }}
+                  />
+                  {searchTerm && (
                   <button
-                    className="ml-2 bg-blue-500 text-white px-4 py-2 rounded"
-                    onClick={handleSearch}
+                    className="absolute inset-y-0 pr-3 right-25 flex items-center text-sm leading-5"
+                    onClick={() => setSearchTerm("")}
                   >
-                    Search
+                    ✕
+                  </button>
+                  )}
+                  <button
+                  className="ml-2 bg-blue-500 text-white px-4 py-2 rounded"
+                  onClick={handleSearch}
+                  >
+                  Search
                   </button>
                 </div>
               </div>

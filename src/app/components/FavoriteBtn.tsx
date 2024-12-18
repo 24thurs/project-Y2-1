@@ -20,7 +20,6 @@ const FavoriteBtn = ({ course_id, cookie }: { course_id: string; cookie: boolean
       });
     }
   };
-
   return (
     <button>
       <a
