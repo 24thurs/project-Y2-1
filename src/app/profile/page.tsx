@@ -6,6 +6,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import DeleteBtn from "../components/DeleteBtn";
+import HandleUser from "../components/HandleUser";
+
 
 export function Profile() {
   const [profile, setProfile] = useState<any>(null);
@@ -24,41 +26,7 @@ export function Profile() {
 
   if (!profile) {
     return ( 
-    <div className="flex items-center justify-center h-screen bg-[#EAEFF8] min-h-screen">
-      <div className="bg-gray-300 w-full max-w-md p-8 rounded-lg shadow-md text-center">
-        <div className="flex justify-center mb-4">
-          <Image
-            src="/image/icon.png" 
-            alt="access denied"
-            width={300}
-            height={300}
-          />
-        </div>
-
-        <h2 className="text-xl font-bold text-black mb-2">
-         This page cannot be accessed
-        </h2>
-        <p className="text-black mb-6">Please log in before using</p>
-
-        <div className="flex justify-center space-x-4 mb-4">
-          <Link href="/login">
-            <button className="bg-blue-500 text-white w-[100px] h-[40px] text-xl rounded-md hover:bg-blue-600 transition">
-              Login
-            </button>
-          </Link>
-          <Link href="/signup">
-            <button className="bg-blue-400 text-white w-[100px] h-[40px] text-xl rounded-md hover:bg-blue-600 transition">
-              Sign up
-            </button>
-          </Link>
-        </div>
-        <Link href="/">
-          <button className="bg-gray-400 text-white w-[100px] h-[40px] text-xl rounded-md hover:bg-gray-600 transition">
-            Back
-          </button>
-        </Link>
-      </div>
-      </div>
+    <HandleUser/>
     )
   }
 
@@ -102,39 +70,39 @@ export function Profile() {
   <button className="bg-[#638ECB] text-xl ml-4 p-3 text-white font-bold rounded-full">
           Your Course
         </button>
-  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-5 ml-10 gap-5">
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-5 ml-10 gap-8">
     {courseData && courseData.length > 0 ? (
       courseData.map((val) => (
         <div
           key={val._id}
-          className=" rounded-lg shadow-md w-[400px] overflow-hidden"
+          className="rounded-lg shadow-lg overflow-hidden bg-white"
         >
           <Image
-            className="w-full h-48 object-cover"
+            className="w-full h-56 object-cover"
             src={val.img}
-            width={100}
-            height={100}
+            width={400}
+            height={224}
             alt={val.coursename}
             priority
           />
-          <div className="p-4">
-            <h3 className="bg- text-xl font-bold text-gray-800">
+          <div className="p-6">
+            <h3 className="text-2xl font-bold text-gray-800 mb-2">
               {val.coursename}
             </h3>
-            <p className="text-sm text-gray-500">Teacher: {val.teacher}</p>
-            <p className="text-sm text-gray-500">Subject: {val.subject}</p>
-            <p className="text-sm text-gray-500">Location: {val.coursetype}</p>
-            <div className="flex justify-between items-center mt-2">
-              <p className="text-sm text-gray-500">
-                number of member: {val.totalmember} person
+            <p className="text-sm text-gray-600 mb-1">Teacher: {val.teacher}</p>
+            <p className="text-sm text-gray-600 mb-1">Subject: {val.subject}</p>
+            <p className="text-sm text-gray-600 mb-1">Location: {val.coursetype}</p>
+            <div className="flex justify-between items-center mt-4">
+              <p className="text-sm text-gray-600">
+                Number of members: {val.totalmember} person
               </p>
               <p className="text-lg text-green-600 font-semibold">
-                {val.price} บาท / คน
+                {val.price} Bath / person
               </p>
             </div>
-            <div className="mt-5 flex space-x-3">
+            <div className="mt-6 flex space-x-4">
               <Link
-                className="bg-gray-500 text-white py-2 px-3 rounded-md"
+                className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition"
                 href={`/edit/${val._id}`}
               >
                 Edit
@@ -145,7 +113,7 @@ export function Profile() {
         </div>
       ))
     ) : (
-      <p className="bg-gray-500 p-3 my-3">Not have any post yet</p>
+      <p className="bg-gray-500 p-3 my-3 text-white text-center">No posts yet</p>
     )}
   </div>
   <div className = "mb-4"></div>
