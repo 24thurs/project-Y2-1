@@ -3,9 +3,11 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { getCourseById } from "@/serveraction/serverActions";
+import { getCourseById, checkCookie } from "@/serveraction/serverActions";
 import Navbar from "../../components/Navbar";
-
+import EnrollBtn from "@/app/components/EnrollBtn";
+import FavoriteBtn from "@/app/components/FavoriteBtn";
+import Loading from "@/app/components/Loading";
 
 interface Params {
   _id: string;
@@ -13,8 +15,19 @@ interface Params {
 
 const CourseDetailPage = ({ params }: { params: Promise<Params> }) => {
   const [unwrappedParams, setUnwrappedParams] = useState<Params | null>(null);
-  const [courseData, setCourseData] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
+  const [courseData, setCourseData] = useState<
+    {
+      _id: string;
+      img: string;
+      coursename: string;
+      teacher: string;
+      subject: string;
+      coursetype: string;
+      totalmember: number;
+      price: number;
+    }[]
+  >([]);
+  const [cookie, setCookie] = useState(false);
 
   useEffect(() => {
     params.then((resolvedParams) => {
@@ -35,9 +48,16 @@ const CourseDetailPage = ({ params }: { params: Promise<Params> }) => {
   }, [unwrappedParams]);
 
   const router = useRouter();
+  useEffect(() => {
+    async function getCookie() {
+      const isCookie = await checkCookie();
+      if (isCookie) setCookie(true);
+    }
+    getCookie();
+  }, []);
 
   if (!unwrappedParams || !courseData) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return (
@@ -55,7 +75,7 @@ const CourseDetailPage = ({ params }: { params: Promise<Params> }) => {
         </div>
         <div className="max-w-full mx-auto bg-[#EAEFF8] shadow-lg rounded-lg p-6 flex flex-col md:flex-row md:flex-row-reverse">
           {/* Image Section */}
-          <div className="w-[350px] h-[220px] bg-gray-200 rounded-md shadow-lg md:ml-6 mb-4 md:mb-0">
+          <div className="w-[420px] h-[280px] bg-gray-200 rounded-md shadow-lg md:ml-6 mb-4 md:mb-0">
             {courseData.img ? (
               <img
                 src={courseData.img}
@@ -64,7 +84,7 @@ const CourseDetailPage = ({ params }: { params: Promise<Params> }) => {
               />
             ) : (
               <span className="text-gray-500 flex items-center justify-center h-full">
-                350 x 220
+                420 x 280
               </span>
             )}
           </div>
@@ -85,31 +105,42 @@ const CourseDetailPage = ({ params }: { params: Promise<Params> }) => {
 
             {/* Teacher Name */}
             <div className="bg-white rounded-xl p-4">
-              <label className="text-gray-700 font-semibold">Teacher Name</label>
+              <label className="text-gray-700 font-semibold">
+                Teacher Name
+              </label>
               <p className="text-lg">{courseData.teacher}</p>
             </div>
 
             {/* Course Detail */}
             <div className="bg-white rounded-xl p-4">
               <label className="text-gray-700 font-semibold">Course Detail</label>
-              <p className="text-lg">{courseData.detail}</p>
+              <p className="text-lg" style={{ whiteSpace: 'pre-line' }}>
+                {courseData.detail}
+              </p>
             </div>
+
 
             {/* Hours Content and Total Members */}
             <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
               <div className="bg-white rounded-xl p-4">
-                <label className="text-gray-700 font-semibold">Hours Content</label>
+                <label className="text-gray-700 font-semibold">
+                  Hours Content
+                </label>
                 <p className="text-lg">{courseData.hour}</p>
               </div>
               <div className="bg-white rounded-xl p-4">
-                <label className="text-gray-700 font-semibold">Total Members</label>
+                <label className="text-gray-700 font-semibold">
+                  Total Members
+                </label>
                 <p className="text-lg">{courseData.totalmember}</p>
               </div>
             </div>
 
             {/* Price per Person */}
             <div className="bg-white rounded-xl p-4">
-              <label className="text-gray-700 font-semibold">Price per Person</label>
+              <label className="text-gray-700 font-semibold">
+                Price per Person
+              </label>
               <p className="text-lg">{courseData.price}</p>
             </div>
 
@@ -125,27 +156,13 @@ const CourseDetailPage = ({ params }: { params: Promise<Params> }) => {
         <div className="flex justify-between items-center mt-8">
           <Link
             href="/"
-            className="bg-gray-400 text-white px-6 py-2 rounded hover:bg-gray-500"
+            className="bg-gray-400 text-white px-8 py-3 rounded hover:bg-gray-500 text-lg"
           >
             Back
           </Link>
           <div className="flex space-x-4">
-            <button
-              onClick={() => {
-                if (confirm("Are you sure you want to enroll in the course?")) {
-                  alert("Enrolled in the course!");
-                }
-              }}
-              className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600"
-            >
-              Enroll
-            </button>
-            <button
-              onClick={() => alert("Added to favourites!")}
-              className="bg-yellow-500 text-white px-6 py-2 rounded hover:bg-yellow-600"
-            >
-              Favourite
-            </button>
+            <EnrollBtn course_id={courseData._id} cookie={cookie} />
+            <FavoriteBtn course_id={courseData._id} cookie={cookie} />
           </div>
         </div>
       </div>
