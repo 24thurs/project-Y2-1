@@ -2,8 +2,15 @@
 
 import React from "react";
 import Swal from "sweetalert2";
+import HandleUser from "../components/HandleUser";
 
-const EnrollBtn = ({ course_id }: { course_id: string }) => {
+const EnrollBtn = ({
+  course_id,
+  cookie,
+}: {
+  course_id: string;
+  cookie: boolean;
+}) => {
   const swalWithBootstrapButtons = Swal.mixin({
     customClass: {
       confirmButton:
@@ -26,15 +33,24 @@ const EnrollBtn = ({ course_id }: { course_id: string }) => {
         reverseButtons: true,
       })
       .then(async (result) => {
-        swalWithBootstrapButtons
-          .fire({
-            title: "Success!",
-            text: "Your have enrolled this course.",
-            icon: "success",
-          })
-          .then(() => {
-            window.location.reload();
+        if (!cookie) {
+          Swal.fire({
+            title: "Please log in to enroll",
+            icon: "warning",
+          }).then(() => {
+            window.location.href = "/login"; // Redirect to login page
           });
+        } else {
+          swalWithBootstrapButtons
+            .fire({
+              title: "Success!",
+              text: "Your have enrolled this course.",
+              icon: "success",
+            })
+            .then(() => {
+              window.location.reload();
+            });
+        }
         if (result.dismiss === Swal.DismissReason.cancel) {
           swalWithBootstrapButtons.fire({
             title: "Cancelled",

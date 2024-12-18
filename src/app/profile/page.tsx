@@ -80,7 +80,7 @@ export function Profile() {
   <button className="bg-[#638ECB] text-xl ml-4 p-3 text-white font-bold rounded-full">
           Your Course
         </button>
-  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-5 ml-10 gap-8">
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 mt-5 ml-10 gap-8">
     {courseData && courseData.length > 0 ? (
       courseData.map((val) => (
         <div
