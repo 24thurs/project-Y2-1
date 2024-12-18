@@ -148,7 +148,7 @@ const Navbar = () => {
               Login
             </Link>
             <Link
-              href="/register"
+              href="/signup"
               className="w-full text-center text-lg hover:bg-blue-400 hover:text-black py-2 rounded transition duration-300"
             >
               Register
