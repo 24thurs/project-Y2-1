@@ -65,7 +65,7 @@ function Home() {
     try {
       const response = await fetch(`/api/search?query=${searchTerm}`);
       const data = await response.json();
-      setResults(data);
+        setResults(data);
 
       if (response.ok) {
         console.log(results);
@@ -386,8 +386,8 @@ function Home() {
                                 Location: {val.coursetype}
                               </p>
                               <div className="flex justify-between items-center mt-1">
-                                <p className="text-sm text-gray-500">
-                                  required: {val.totalmember} person
+                                <p className="text-lg font-semibold text-black">
+                                  Enrolled: 0 / {val.totalmember} person
                                 </p>
                                 <p className="text-lg text-green-600 font-semibold">
                                   {val.price} Baht / person
@@ -440,8 +440,8 @@ function Home() {
                                   Location: {result.coursetype}
                                 </p>
                                 <div className="flex justify-between items-center mt-1">
-                                  <p className="text-sm text-gray-500">
-                                    required: {result.totalmember} person
+                                  <p className="text-lg font-semibold text-black">
+                                    Enrolled: 0 / {result.totalmember} person
                                   </p>
                                   <p className="text-lg text-green-600 font-semibold">
                                     {result.price} Baht / person
@@ -454,7 +454,7 @@ function Home() {
                     )
                   : isSearching && (
                       <p className="bg-gray-500 p-3 my-3">No results found</p>
-                    )}
+                  )}
               </div>
             </>
           )}

@@ -108,6 +108,7 @@ const CreatePage = () => {
                 alt="Course Image"
                 className="object-cover w-full h-full rounded-md"
                 onError={() => setImageUrl("")}
+               
               />
               ) : (
               <span className="text-gray-500">
@@ -133,6 +134,15 @@ const CreatePage = () => {
 
               {/* Course Name */}
               <div className="space-y-2"></div>
+              <label className="text-gray-700">Course name</label>
+              <input
+                type="text"
+                className="w-full py-2 px-4 border rounded-xl bg-white focus:bg-white focus:outline-none focus:ring-0"
+                placeholder="Course name"
+                name="courseName"
+                onChange={(e) => setImageUrl(e.target.value)}
+              />
+
               {/* Subject Dropdown */}
               <div className="space-y-2">
                 <label className="text-gray-700">Subject</label>
