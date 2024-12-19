@@ -7,6 +7,7 @@ import Navbar from "../components/Navbar";
 import { checkCookie } from "@/serveraction/serverActions";
 import HandleUser from "../components/HandleUser";
 import Loading from "../components/Loading";
+import CreateBtn from "../components/Createbtn";
 
 const CreatePage = () => {
   const [imageUrl, setImageUrl] = useState("");
@@ -294,12 +295,7 @@ const CreatePage = () => {
                 >
                   Back
                 </Link>
-                <button
-                  type="submit"
-                  className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 ml-4"
-                >
-                  Create Course
-                </button>
+                <CreateBtn cookie={cookie} />
               </div>
             </form>
           </div>

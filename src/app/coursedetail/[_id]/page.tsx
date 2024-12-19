@@ -160,7 +160,7 @@ const CourseDetailPage = ({ params }: { params: Promise<Params> }) => {
             Back
           </Link>
           <div className="flex space-x-4">
-            <EnrollBtn course_id={courseData._id} cookie={cookie}/>
+            <EnrollBtn course_id={courseData._id} cookie={cookie} />
             <FavoriteBtn course_id={courseData._id} cookie={cookie} />
           </div>
         </div>

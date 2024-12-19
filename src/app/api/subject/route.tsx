@@ -1,10 +1,10 @@
-import { connectMongoDB } from "@/config/config";
-import { Course } from "@/models/models";
+import { connectDatabases } from "@/config/config";
+import { Course, Subject } from "@/models/models";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
   try {
-    await connectMongoDB();
+    await connectDatabases();
 
     const url = new URL(req.url);
     const query = url.searchParams.get("query");
@@ -26,4 +26,25 @@ export async function GET(req: Request) {
       { status: 500 }
     );
   }
+}
+
+export async function POST(req: Request){
+  try {
+    const {subject_name} = await req.json();
+
+    await connectDatabases();
+    const subject = await Subject.create({
+      subject_name
+    })
+    await subject.save()
+    return NextResponse.json ({ message: "create successfully" },
+    { status: 201 });
+
+  } catch(error) {
+    return NextResponse.json(
+      { error: "Failed to create subject" },
+      { status: 400 }
+    );
+  }
+  
 }

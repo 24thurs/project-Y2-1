@@ -195,6 +195,14 @@ export async function getCourse() {
     }
 
     const data = await res.json();
+    data.courses = data.courses.map(course => {
+      const matchingRoll = data.number_roll.find(roll => roll._id === course._id);
+      return {
+        ...course,
+        count: matchingRoll ? matchingRoll.count : 0,
+      };
+    });
+    console.log(data.courses)
     return data.courses;
   } catch (error) {
     console.log("Error loading posts: ", error);
@@ -259,6 +267,85 @@ export async function updateCourse(course_id: string, formData: FormData) {
       throw new Error("Failed to update course");
     }
   } catch (error) {
+    return;
+  }
+}
+
+
+export async function enroll(course_id: string) {
+  const cookieStore = await cookies();
+  const session = cookieStore.get("session")?.value;
+
+  if (!session) {
+    console.error("Session not found in cookies.");
+    return null;
+  }
+
+  const payload = await decrypt(session);
+  if (!payload) {
+    console.error("Failed to decrypt session.");
+    return null;
+  }
+
+  const userId = payload.userId;
+
+  try {
+    const res = await fetch(`http://localhost:3000/api/enroll`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId, course_id }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      console.log(data.error);
+      throw new Error("Failed to enroll course");
+    }
+  } catch (error) {
+    console.error("Error enrolling course:", error);
+    return;
+  }
+}
+
+
+
+export async function cancelEnroll(course_id: string) {
+  const cookieStore = await cookies();
+  const session = cookieStore.get("session")?.value;
+
+  if (!session) {
+    console.error("Session not found in cookies.");
+    return null;
+  }
+
+  const payload = await decrypt(session);
+  if (!payload) {
+    console.error("Failed to decrypt session.");
+    return null;
+  }
+
+  const userId = payload.userId;
+
+  try {
+    const res = await fetch(`http://localhost:3000/api/enroll`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId, course_id }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      console.log(data.error);
+      throw new Error("Failed to cancel enrollment");
+    }
+  } catch (error) {
+    console.error("Error canceling enrollment:", error);
     return;
   }
 }

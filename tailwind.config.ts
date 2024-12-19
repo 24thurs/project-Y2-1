@@ -13,7 +13,7 @@ export default {
         foreground: "var(--foreground)",
       },
       spacing: {
-        '25': '7.25rem',
+        '24': '7.25rem',
       },
     },
   },

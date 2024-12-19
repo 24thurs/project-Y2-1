@@ -187,7 +187,7 @@ const ReviewPage = () => {
                     onClick={() => handleCourseSelect(course.id)}
                   >
                     <img
-                      src={'https://investin.org/cdn/shop/articles/How_to_Motivate_Yourself_to_Study.jpg?v=1640183354'}
+                      src={course.image}
                       alt={course.title}
                       className="w-full h-40 object-cover rounded-md"
                     />
