@@ -1,11 +1,11 @@
 "use client";
 
-import Navbar from "../components/Navbar";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { checkCookie } from "@/serveraction/serverActions";
 import HandleUser from "../components/HandleUser";
 import Loading from "../components/Loading";
+import Navbar from "../components/Navbar";
 
 type Course = {
   id: number;
@@ -145,8 +145,8 @@ const ReviewPage = () => {
     return <HandleUser />;
   } else {
     return (
-      <div className="flex bg-gray-100 min-h-screen">
-        <div className="md:mr-4">
+      <div className="flex flex-col md:flex-row bg-gray-100 min-h-screen">
+        <div className="md:w-1/4">
           <Navbar />
         </div>
 
@@ -213,65 +213,65 @@ const ReviewPage = () => {
           </div>
 
           {/* Review Section */}
-          {selectedCourseId && (
+            {selectedCourseId && (
             <div className="bg-yellow-200 p-6 rounded-md">
-              <h2 className="text-lg font-bold text-center mb-4">
-                Evaluation of teachers and subjects
+              <h2 className="text-lg md:text-2xl font-bold text-center mb-4">
+              Evaluation of teachers and subjects
               </h2>
 
-              <div className="grid grid-cols-2 gap-4 mb-4">
-                {ratingCriteria.map((criterion, index) => (
-                  <div key={index}>
-                    <label className="block mb-2 font-medium">
-                      {criterion}
-                    </label>
-                    <div className="flex space-x-4">
-                      {[1, 2, 3, 4, 5].map((rating) => (
-                        <button
-                          key={rating}
-                          onClick={() =>
-                            handleRating(selectedCourseId, index, rating)
-                          }
-                          className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                            ratings[selectedCourseId]?.[index] === rating
-                              ? "bg-green-600 text-white"
-                              : "bg-gray-300 text-gray-600"
-                          }`}
-                        >
-                          {rating}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                ))}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              {ratingCriteria.map((criterion, index) => (
+                <div key={index}>
+                <label className="block mb-2 font-medium text-sm md:text-base">
+                  {criterion}
+                </label>
+                <div className="flex space-x-2 md:space-x-4">
+                  {[1, 2, 3, 4, 5].map((rating) => (
+                  <button
+                    key={rating}
+                    onClick={() =>
+                    handleRating(selectedCourseId, index, rating)
+                    }
+                    className={`w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center ${
+                    ratings[selectedCourseId]?.[index] === rating
+                      ? "bg-green-600 text-white"
+                      : "bg-gray-300 text-gray-600"
+                    }`}
+                  >
+                    {rating}
+                  </button>
+                  ))}
+                </div>
+                </div>
+              ))}
               </div>
 
               <div>
-                <label className="block mb-2 font-medium">
-                  รายละเอียดเพิ่มเติม
-                </label>
-                <textarea
-                  className="w-full border-2 border-gray-300 rounded-md p-2 focus:outline-green-500"
-                  rows={4}
-                  placeholder="เขียนความคิดเห็นเพิ่มเติมเกี่ยวกับคอร์สนี้..."
-                  value={reviewDetails}
-                  onChange={(e) => setReviewDetails(e.target.value)}
-                ></textarea>
+              <label className="block mb-2 font-medium text-sm md:text-base">
+                รายละเอียดเพิ่มเติม
+              </label>
+              <textarea
+                className="w-full border-2 border-gray-300 rounded-md p-2 focus:outline-green-500"
+                rows={4}
+                placeholder="เขียนความคิดเห็นเพิ่มเติมเกี่ยวกับคอร์สนี้..."
+                value={reviewDetails}
+                onChange={(e) => setReviewDetails(e.target.value)}
+              ></textarea>
               </div>
 
-              <div className="flex justify-end space-x-4 mt-6">
-                <button
-                  className="bg-gray-500 text-white px-6 py-2 rounded-md hover:bg-red-600"
-                  onClick={() => router.push("/")}
-                >
-                  Back to Home
-                </button>
-                <button className="bg-green-500 text-white px-6 py-2 rounded-md hover:bg-green-600">
-                  Confirm
-                </button>
+              <div className="flex flex-col md:flex-row justify-end space-y-2 md:space-y-0 md:space-x-4 mt-6">
+              <button
+                className="bg-gray-500 text-white px-6 py-2 rounded-md hover:bg-red-600"
+                onClick={() => router.push("/")}
+              >
+                Back to Home
+              </button>
+              <button className="bg-green-500 text-white px-6 py-2 rounded-md hover:bg-green-600">
+                Confirm
+              </button>
               </div>
             </div>
-          )}
+            )}
         </main>
       </div>
     );

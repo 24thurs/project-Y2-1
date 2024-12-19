@@ -7,6 +7,7 @@ import Navbar from "../components/Navbar";
 import { checkCookie } from "@/serveraction/serverActions";
 import HandleUser from "../components/HandleUser";
 import Loading from "../components/Loading";
+import CreateBtn from "../components/Createbtn";
 
 const CreatePage = () => {
   const [imageUrl, setImageUrl] = useState("");
@@ -108,6 +109,7 @@ const CreatePage = () => {
                 alt="Course Image"
                 className="object-cover w-full h-full rounded-md"
                 onError={() => setImageUrl("")}
+               
               />
               ) : (
               <span className="text-gray-500">
@@ -133,6 +135,15 @@ const CreatePage = () => {
 
               {/* Course Name */}
               <div className="space-y-2"></div>
+              <label className="text-gray-700">Course name</label>
+              <input
+                type="text"
+                className="w-full py-2 px-4 border rounded-xl bg-white focus:bg-white focus:outline-none focus:ring-0"
+                placeholder="Course name"
+                name="courseName"
+                onChange={(e) => setImageUrl(e.target.value)}
+              />
+
               {/* Subject Dropdown */}
               <div className="space-y-2">
                 <label className="text-gray-700">Subject</label>
@@ -284,12 +295,7 @@ const CreatePage = () => {
                 >
                   Back
                 </Link>
-                <button
-                  type="submit"
-                  className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 ml-4"
-                >
-                  Create Course
-                </button>
+                <CreateBtn cookie={cookie} />
               </div>
             </form>
           </div>

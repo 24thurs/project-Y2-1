@@ -117,8 +117,8 @@ export function Profile() {
             Location: {val.coursetype}
           </p>
           <div className="flex justify-between items-center mt-4">
-            <p className="text-sm text-gray-600">
-              Number of members: {val.totalmember} person
+            <p className="text-lg font-semibold text-black">
+              Enrolled: 2 / {val.totalmember} person
             </p>
             <p className="text-lg text-green-600 font-semibold">
               {val.price} Bath / person
@@ -156,28 +156,28 @@ export function Profile() {
           >
             <Image
           className="w-full h-56 object-cover"
-          src={val.img}
+          src={'https://vedicmathschool.org/wp-content/uploads/2021/10/International-Mathematical-Olympiad.jpg'}
           width={400}
           height={280}
           alt={val.coursename}
           priority
             />
             <div className="p-6">
-          <h3 className="text-2xl font-bold text-gray-800 mb-2">
-            {val.coursename}
-          </h3>
-          <p className="text-sm text-gray-600 mb-1">
-            Teacher: {val.teacher}
-          </p>
-          <p className="text-sm text-gray-600 mb-1">
-            Subject: {val.subject}
-          </p>
-          <p className="text-sm text-gray-600 mb-1">
-            Location: {val.coursetype}
-          </p>
-          <div className="flex justify-between items-center mt-4">
-            <p className="text-sm text-gray-600">
-              Number of members: {val.totalmember} person
+            <h3 className="text-2xl font-bold text-gray-800 mb-2">
+            Advanced Mathematics
+            </h3>
+            <p className="text-sm text-gray-600 mb-1">
+            Teacher: Jane Smith
+            </p>
+            <p className="text-sm text-gray-600 mb-1">
+            Subject: Mathematics
+            </p>
+            <p className="text-sm text-gray-600 mb-1">
+            Location: On-Campus
+            </p>
+            <div className="flex justify-between items-center mt-4">
+            <p className="text-lg font-semibold text-black">
+              Enrolled: 5 / 20 person
             </p>
             <p className="text-lg text-blue-600 font-semibold">
               Enrolled
@@ -206,33 +206,33 @@ export function Profile() {
           >
             <Image
           className="w-full h-56 object-cover"
-          src={val.img}
+          src={'https://cdn.builtin.com/cdn-cgi/image/f=auto,fit=cover,w=1200,h=635,q=80/https://builtin.com/sites/www.builtin.com/files/2024-09/programming-languages.jpg'}
           width={400}
           height={280}
           alt={val.coursename}
           priority
             />
             <div className="p-6">
-          <h3 className="text-2xl font-bold text-gray-800 mb-2">
-            {val.coursename}
-          </h3>
-          <p className="text-sm text-gray-600 mb-1">
-            Teacher: {val.teacher}
-          </p>
-          <p className="text-sm text-gray-600 mb-1">
-            Subject: {val.subject}
-          </p>
-          <p className="text-sm text-gray-600 mb-1">
-            Location: {val.coursetype}
-          </p>
-          <div className="flex justify-between items-center mt-4">
-            <p className="text-sm text-gray-600">
-              Number of members: {val.totalmember} person
+            <h3 className="text-2xl font-bold text-gray-800 mb-2">
+            Introduction to Programming
+            </h3>
+            <p className="text-sm text-gray-600 mb-1">
+            Teacher: John Doe
             </p>
-            <p className="text-lg text-green-600 font-semibold">
-              {val.price} Bath / person
+            <p className="text-sm text-gray-600 mb-1">
+            Subject: Computer Science
             </p>
-          </div>
+            <p className="text-sm text-gray-600 mb-1">
+            Location: Online
+            </p>
+            <div className="flex justify-between items-center mt-4">
+            <p className="text-lg font-semibold text-black">
+              Enrolled: 30 / 30 person
+            </p>
+            <p className="text-lg text-red-600 font-semibold">
+              Full
+            </p>
+            </div>
             </div>
           </div>
         ))

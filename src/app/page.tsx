@@ -17,6 +17,7 @@ function Home() {
     coursetype: string;
     totalmember: number;
     price: number;
+    count: number;
   }
 
   const [courseData, setCourseData] = useState<Course[]>([]);
@@ -97,7 +98,7 @@ function Home() {
     { id: 12, title: "Literature", image: "/image/Literature.png" },
     { id: 13, title: "Philosophy", image: "/image/Philosophy.png" },
     { id: 14, title: "Sociology", image: "/image/Sociology.png" },
-    { id: 15, title: "Psychology", image: "/image/Psychology.png" }
+    { id: 15, title: "Psychology", image: "/image/Psychology.png" },
   ];
 
   // Calculate the number of courses per slide based on screen size
@@ -130,39 +131,41 @@ function Home() {
     <div style={{ backgroundColor: "#EAEFF8", minHeight: "100vh" }}>
       <div className="flex flex-col md:flex-row">
         <Navbar />
-
+      
         <main className="container mx-auto my-8 px-4">
           {isLoading ? (
             <Loading />
           ) : (
             <>
-              <div className="flex justify-center items-center w-full pl-1">
-                <div className="bg-white rounded-lg shadow-md p-4 relative w-full max-w-4xl flex">
+              <div className="w-full py-4">
+                <div className="bg-white rounded-lg shadow-md p-4 relative w-full max-w-4xl mx-auto flex justify-center items-center">
+                  <img
+                    src="/image/logo.png"
+                    alt="Icon"
+                    className="w-30 h-10 mr-4"
+                  />
+
                   <input
-                  type="text"
-                  placeholder="search..."
-                  className="flex-grow border p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Escape") {
-                    setSearchTerm("");
-                    }
-                  }}
+                    type="text"
+                    placeholder="search..."
+                    className="flex-grow border p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
                   />
                   {searchTerm && (
-                  <button
-                    className="absolute inset-y-0 pr-3 right-25 flex items-center text-sm leading-5"
-                    onClick={() => setSearchTerm("")}
-                  >
-                    ✕
-                  </button>
+                    <button
+                      className="absolute inset-y-0 right-24 flex items-center text-sm leading-5"
+                      onClick={() => setSearchTerm("")}
+                    >
+                      ✕
+                    </button>
                   )}
+
                   <button
-                  className="ml-2 bg-blue-500 text-white px-4 py-2 rounded"
-                  onClick={handleSearch}
+                    className="ml-2 bg-blue-500 text-white px-4 py-2 rounded"
+                    onClick={handleSearch}
                   >
-                  Search
+                    Search
                   </button>
                 </div>
               </div>
@@ -386,8 +389,8 @@ function Home() {
                                 Location: {val.coursetype}
                               </p>
                               <div className="flex justify-between items-center mt-1">
-                                <p className="text-sm text-gray-500">
-                                  required: {val.totalmember} person
+                                <p className="text-lg font-semibold text-black">
+                                  Enrolled: {val.count}  / {val.totalmember} person
                                 </p>
                                 <p className="text-lg text-green-600 font-semibold">
                                   {val.price} Baht / person
@@ -440,8 +443,8 @@ function Home() {
                                   Location: {result.coursetype}
                                 </p>
                                 <div className="flex justify-between items-center mt-1">
-                                  <p className="text-sm text-gray-500">
-                                    required: {result.totalmember} person
+                                  <p className="text-lg font-semibold text-black">
+                                    Enrolled: 0 / {result.totalmember} person
                                   </p>
                                   <p className="text-lg text-green-600 font-semibold">
                                     {result.price} Baht / person

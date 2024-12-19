@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
-import { connectMongoDB } from "@/config/config";
+import { connectDatabases } from "@/config/config";
 import { User, Course } from "@/models/models";
 
 export async function GET(req: Request) {
     try {
-        await connectMongoDB();
+        await connectDatabases();
 
         const url = new URL(req.url);
         const userId = url.pathname.split("/").pop();

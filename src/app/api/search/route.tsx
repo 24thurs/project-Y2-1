@@ -1,10 +1,10 @@
-import { connectMongoDB } from "@/config/config";
+import { connectDatabases } from "@/config/config";
 import { Course } from "@/models/models";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
   try {
-    await connectMongoDB();
+    await connectDatabases();
 
     const url = new URL(req.url);
     const query = url.searchParams.get("query");
